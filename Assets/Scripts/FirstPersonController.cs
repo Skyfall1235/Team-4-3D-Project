@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
@@ -18,6 +17,8 @@ public class FirstPersonController : MonoBehaviour
     bool canCrouch = true ;
     [SerializeField]
     bool hasHeadBob = true;
+    [SerializeField]
+    bool slideDownSteepSlopes = true;
 
     [Header("Movement Parameters")]
     [SerializeField]
@@ -79,6 +80,14 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField]
     float crouchWalkBobAmount = 0.025f;
 
+    [Header("Slope Sliding Parameters")]
+    [SerializeField]
+    float maxSlopeSlipSpeed = 8f;
+    [SerializeField]
+    float slopeSlipAcceleration;
+    [SerializeField]
+    float slopeRaycastDistance = 2f;
+
     //Private Variables
     private float deafaultCameraYPosition;
     private bool isInCrouchAnimation;
@@ -90,7 +99,23 @@ public class FirstPersonController : MonoBehaviour
     private Vector3 movementDirection;
     private float xCameraRotation;
     private float headBobTimer;
+    private Vector3 hitPointNormal;
 
+    private bool shouldSlide
+    {
+        get
+        {
+            if(characterController.isGrounded && Physics.Raycast(transform.position, Vector3.down, out RaycastHit slopeHit, slopeRaycastDistance))
+            {
+                hitPointNormal = slopeHit.normal;
+                return Vector3.Angle(hitPointNormal, Vector3.up) > characterController.slopeLimit;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
     private bool shouldSprint => Input.GetButton("Sprint") && canSprint && characterController.isGrounded;
     private bool shouldJump => Input.GetButtonDown("Jump") && characterController.isGrounded;
     private bool shouldCrouch => Input.GetButtonDown("Crouch") && !isInCrouchAnimation && characterController.isGrounded;
@@ -213,6 +238,11 @@ public class FirstPersonController : MonoBehaviour
         if(!characterController.isGrounded)
         {
             movementDirection.y -= gravity* Time.deltaTime;
+        }
+        if(slideDownSteepSlopes && shouldSlide)
+        {
+            Vector3 newMovementVectorForSlide = Vector3.MoveTowards(characterController.velocity, new Vector3(hitPointNormal.x, -hitPointNormal.y, hitPointNormal.z) * maxSlopeSlipSpeed, Time.deltaTime * slopeSlipAcceleration);
+            movementDirection = newMovementVectorForSlide;
         }
         characterController.Move(movementDirection * Time.deltaTime);
     }
