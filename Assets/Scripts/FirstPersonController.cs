@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-public class FirstPersonController : MonoBehaviour
+public class FirstPersonController : Health
 {
     public bool CanMove { get; private set; } = true;
 
@@ -88,6 +88,16 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField]
     float slopeRaycastDistance = 2f;
 
+    [Header("Health")]
+    [SerializeField]
+    int startingHealth;
+    [SerializeField]
+    int startingMaxHealth;
+    [SerializeField]
+    bool startingInvulnerableState;
+    [SerializeField]
+    float startingInvulnerabilityTimeAfterHit;
+
     //Private Variables
     private float deafaultCameraYPosition;
     private bool isInCrouchAnimation;
@@ -122,6 +132,7 @@ public class FirstPersonController : MonoBehaviour
 
     void Awake()
     {
+        OnValidate();
         gravity = Physics.gravity.magnitude;
         if(GetComponentInChildren<Camera>() != null)
         {
@@ -164,6 +175,13 @@ public class FirstPersonController : MonoBehaviour
                 HandleHeadBob();
             }
             ApplyCharacterMovement();
+        }
+    }
+    private void OnValidate()
+    {
+        if(Application.isPlaying)
+        {
+            SetHealthVars(startingHealth, startingMaxHealth, startingInvulnerableState, startingInvulnerabilityTimeAfterHit);
         }
     }
     void HandleMovementInput()

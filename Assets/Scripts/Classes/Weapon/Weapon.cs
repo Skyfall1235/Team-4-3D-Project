@@ -61,7 +61,7 @@ public abstract class Weapon : MonoBehaviour
         if(currentClip > 0)
         {
             currentClip = Mathf.Clamp(currentClip - 1, 0, clipSize);
-            Debug.Log(currentClip);
+            Debug.Log(currentClip + "/" + clipSize);
             if(currentClip == 0 && !isReloading)
             {
                 Reload();
