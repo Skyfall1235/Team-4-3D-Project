@@ -56,7 +56,7 @@ public abstract class Weapon : MonoBehaviour
             }
         }
     }
-    public void Fire()
+    public virtual void Fire()
     {
         if(currentClip > 0)
         {
