@@ -11,24 +11,31 @@ public class Pistol : Weapon
     [SerializeField] float maxFireDistance = 1200f;
     [SerializeField] LayerMask bulletLayerMask;
     [SerializeField] int weaponDamage = 20;
+    [SerializeField] Vector2 startingMaxHipFireRecoilAmounts;
+    [SerializeField] Vector2 startingMaxADSRecoilAmounts;
     Camera playerCam;
     float remainingPenetrations;
     public override void Fire()
     {
-        RaycastHit[] bulletHits = Physics.RaycastAll(playerCam.transform.position, playerCam.transform.forward, maxFireDistance, bulletLayerMask);
-        SortedDictionary<float, RaycastHit> raycastHitDistances = new SortedDictionary<float, RaycastHit>();
-        foreach (RaycastHit hit in bulletHits)
+        if(!isReloading)
         {
-            raycastHitDistances.Add(Vector3.Distance(playerCam.transform.position, hit.point), hit);
-        }
-        remainingPenetrations = weaponPenetrationPower;
-        for(int i = 0; i < raycastHitDistances.Count && remainingPenetrations > 0; i++)
-        {
-            if(raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponent<IDamagable>() != null)
+            Vector3 hipFireShotDeviation = (playerCam.transform.up * Random.Range(-maxHipFireRecoilAmounts.x, maxHipFireRecoilAmounts.x)) + (playerCam.transform.right * Random.Range(-maxHipFireRecoilAmounts.y, maxHipFireRecoilAmounts.y));
+            Vector3 adsShotdeviation = (playerCam.transform.up * Random.Range(-maxADSRecoilAmounts.x, maxADSRecoilAmounts.x)) + (playerCam.transform.right * Random.Range(-maxADSRecoilAmounts.y, maxADSRecoilAmounts.y));
+            RaycastHit[] bulletHits = Physics.RaycastAll(playerCam.transform.position, playerCam.transform.forward + (isADS ? adsShotdeviation : hipFireShotDeviation), maxFireDistance, bulletLayerMask);
+            SortedDictionary<float, RaycastHit> raycastHitDistances = new SortedDictionary<float, RaycastHit>();
+            foreach (RaycastHit hit in bulletHits)
             {
-                raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponent<IDamagable>().Damage(weaponDamage);
+                raycastHitDistances.Add(Vector3.Distance(playerCam.transform.position, hit.point), hit);
             }
-            remainingPenetrations--;
+            remainingPenetrations = weaponPenetrationPower;
+            for (int i = 0; i < raycastHitDistances.Count && remainingPenetrations > 0; i++)
+            {
+                if (raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponent<IDamagable>() != null)
+                {
+                    raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponent<IDamagable>().Damage(weaponDamage);
+                }
+                remainingPenetrations--;
+            }
         }
         base.Fire();
     }
@@ -41,5 +48,7 @@ public class Pistol : Weapon
         maxAmmo = 9999;
         reloadTime = 2f;
         clipSize = 10;
+        maxHipFireRecoilAmounts = startingMaxHipFireRecoilAmounts;
+        maxADSRecoilAmounts = startingMaxADSRecoilAmounts;
     }
 }
