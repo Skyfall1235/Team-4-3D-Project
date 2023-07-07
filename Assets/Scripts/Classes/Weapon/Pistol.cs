@@ -24,6 +24,10 @@ public class Pistol : Weapon
     {
         if(!isReloading)
         {
+            if(SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlaySoundOnObject(gameObject, "Pistol Shot", false);
+            }
             Vector3 hipFireShotDeviation = (playerCam.transform.up * Random.Range(-maxHipFireWeaponInaccuracy.x, maxHipFireWeaponInaccuracy.x)) + (playerCam.transform.right * Random.Range(-startingMaxHipFireWeaponInaccuracy.y, startingMaxHipFireWeaponInaccuracy.y));
             Vector3 adsShotdeviation = (playerCam.transform.up * Random.Range(-maxADSWeaponInaccuracy.x, maxADSWeaponInaccuracy.x)) + (playerCam.transform.right * Random.Range(-maxADSWeaponInaccuracy.y, maxADSWeaponInaccuracy.y));
             RaycastHit[] bulletHits = Physics.RaycastAll(playerCam.transform.position, playerCam.transform.forward + (isADS ? adsShotdeviation : hipFireShotDeviation), maxFireDistance, bulletLayerMask);
