@@ -111,7 +111,7 @@ Transform:
   - {fileID: 570210336717910283}
   - {fileID: 6118480201442795475}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1532848154233259475
 GameObject:
@@ -310,7 +310,7 @@ MonoBehaviour:
   sprintMoveSpeed: 6
   crouchMoveSpeed: 1.5
   maxGroundAcceleration: 17.5
-  maxGroundDeceleration: 10
+  maxGroundDeceleration: 1
   maxAirAcceleration: 5
   maxAirDeceleration: 7.5
   maxSlideDeceleration: 0.01
