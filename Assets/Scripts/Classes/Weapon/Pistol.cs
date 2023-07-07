@@ -12,16 +12,20 @@ public class Pistol : Weapon
     [SerializeField] float maxFireDistance = 1200f;
     [SerializeField] LayerMask bulletLayerMask;
     [SerializeField] int weaponDamage = 20;
-    [SerializeField] Vector2 startingMaxHipFireRecoilAmounts;
-    [SerializeField] Vector2 startingMaxADSRecoilAmounts;
+    [SerializeField] Vector3 startingMaxHipFireRecoilAmounts;
+    [SerializeField] Vector3 startingMaxADSRecoilAmounts;
+    [SerializeField] Vector2 startingMaxHipFireWeaponInaccuracy;
+    [SerializeField] Vector2 startingMaxADSWeaponInaccuracy;
+    [SerializeField] float startingRecoilSnapiness;
+    [SerializeField] float startingRecoilReturnSpeed;
     Camera playerCam;
     float remainingPenetrations;
     public override void Fire()
     {
         if(!isReloading)
         {
-            Vector3 hipFireShotDeviation = (playerCam.transform.up * Random.Range(-maxHipFireRecoilAmounts.x, maxHipFireRecoilAmounts.x)) + (playerCam.transform.right * Random.Range(-maxHipFireRecoilAmounts.y, maxHipFireRecoilAmounts.y));
-            Vector3 adsShotdeviation = (playerCam.transform.up * Random.Range(-maxADSRecoilAmounts.x, maxADSRecoilAmounts.x)) + (playerCam.transform.right * Random.Range(-maxADSRecoilAmounts.y, maxADSRecoilAmounts.y));
+            Vector3 hipFireShotDeviation = (playerCam.transform.up * Random.Range(-maxHipFireWeaponInaccuracy.x, maxHipFireWeaponInaccuracy.x)) + (playerCam.transform.right * Random.Range(-startingMaxHipFireWeaponInaccuracy.y, startingMaxHipFireWeaponInaccuracy.y));
+            Vector3 adsShotdeviation = (playerCam.transform.up * Random.Range(-maxADSWeaponInaccuracy.x, maxADSWeaponInaccuracy.x)) + (playerCam.transform.right * Random.Range(-maxADSWeaponInaccuracy.y, maxADSWeaponInaccuracy.y));
             RaycastHit[] bulletHits = Physics.RaycastAll(playerCam.transform.position, playerCam.transform.forward + (isADS ? adsShotdeviation : hipFireShotDeviation), maxFireDistance, bulletLayerMask);
             SortedDictionary<float, RaycastHit> raycastHitDistances = new SortedDictionary<float, RaycastHit>();
             foreach (RaycastHit hit in bulletHits)
@@ -55,5 +59,9 @@ public class Pistol : Weapon
         clipSize = 10;
         maxHipFireRecoilAmounts = startingMaxHipFireRecoilAmounts;
         maxADSRecoilAmounts = startingMaxADSRecoilAmounts;
+        recoilSnappiness = startingRecoilSnapiness;
+        recoilReturnSpeed = startingRecoilReturnSpeed;
+        maxHipFireWeaponInaccuracy = startingMaxHipFireWeaponInaccuracy;
+        maxADSWeaponInaccuracy =  startingMaxADSWeaponInaccuracy;
     }
 }

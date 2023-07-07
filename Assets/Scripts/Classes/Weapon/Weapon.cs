@@ -18,10 +18,12 @@ public abstract class Weapon : MonoBehaviour
     protected int currentClip;
     protected float reloadTime;
 
-
     //Recoil Related Variables
-    protected Vector2 maxHipFireRecoilAmounts;
-    protected Vector2 maxADSRecoilAmounts;
+    protected Vector3 maxHipFireRecoilAmounts;
+    protected Vector3 maxADSRecoilAmounts;
+    protected float recoilSnappiness;
+    protected float recoilReturnSpeed;
+
 
     //ADS Related Variables
     protected float adsTransitionTime;
@@ -33,12 +35,24 @@ public abstract class Weapon : MonoBehaviour
     protected Vector2 maxHipFireWeaponInaccuracy;
     protected Vector2 maxADSWeaponInaccuracy;
 
+    protected RecoilHandler recoilHandler;
+
     private void Start()
     {
         currentClip = clipSize;
         currentAmmo = maxAmmo;
+        if(recoilHandler == null && FindFirstObjectByType<RecoilHandler>() != null)
+        {
+            recoilHandler = FindFirstObjectByType<RecoilHandler>();
+        }
     }
-
+    private void Update()
+    {
+        if(recoilHandler!= null)
+        {
+            recoilHandler.HandleRecoil(recoilReturnSpeed, recoilSnappiness);
+        }
+    }
     public void ChangeADS(bool desiredState)
     {
         if (canADS)
@@ -58,10 +72,21 @@ public abstract class Weapon : MonoBehaviour
     }
     public virtual void Fire()
     {
-        if(currentClip > 0)
+        if(currentClip > 0 && !isReloading)
         {
             currentClip = Mathf.Clamp(currentClip - 1, 0, clipSize);
-            Debug.Log(currentClip + "/" + clipSize);
+            Debug.Log("Clip Remaining: " + currentClip + "/" + clipSize);
+            if(recoilHandler!= null)
+            {
+                if(isADS)
+                {
+                    recoilHandler.RecoilFire(maxADSRecoilAmounts);
+                }
+                else
+                {
+                    recoilHandler.RecoilFire(maxHipFireRecoilAmounts);
+                }
+            }
             if(currentClip == 0 && !isReloading)
             {
                 Reload();

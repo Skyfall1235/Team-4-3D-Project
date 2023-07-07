@@ -30,5 +30,9 @@ public class WeaponManager : MonoBehaviour
                 currentGun.ChangeADS(false);
             }
         }
+        if (Input.GetButtonDown("Reload"))
+        {
+            currentGun.Reload();
+        }
     }
 }
