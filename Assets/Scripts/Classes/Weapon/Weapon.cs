@@ -105,8 +105,9 @@ public abstract class Weapon : MonoBehaviour
         {
             if (currentAmmo >= clipSize)
             {
+                int remainingClip = clipSize - currentClip;
                 currentClip = clipSize;
-                currentAmmo -= clipSize;
+                currentAmmo -= remainingClip;
             }
             else
             {
