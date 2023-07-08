@@ -93,7 +93,7 @@ public abstract class Weapon : MonoBehaviour
             }
         }
     }
-    public void Reload()
+    public virtual void Reload()
     {
         isReloading= true;
         Debug.Log("Reloading...");

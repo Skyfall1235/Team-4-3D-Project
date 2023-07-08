@@ -52,6 +52,14 @@ public class Pistol : Weapon
         }
         base.Fire();
     }
+    public override void Reload()
+    {
+        if(SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlaySoundOnObject(gameObject, "Pistol Reload", false);
+        }
+        base.Reload();
+    }
     private void Awake()
     {
         playerCam = Camera.main;

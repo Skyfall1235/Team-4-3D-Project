@@ -18,3 +18,8 @@ MonoBehaviour:
     soundName: Pistol Shot
     volume: 1
     pitch: 1.02
+  - sound: {fileID: 8300000, guid: 2b29db7abaf96674aafa86dcccb66868, type: 3}
+    isMusic: 0
+    soundName: Pistol Reload
+    volume: 1
+    pitch: 1.02
