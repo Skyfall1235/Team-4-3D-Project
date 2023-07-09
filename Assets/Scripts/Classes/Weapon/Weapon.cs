@@ -91,12 +91,10 @@ public abstract class Weapon : MonoBehaviour
     }
     public virtual void Fire()
     {
-        //only try to fire if our current clip has bullets and we aren't reloading
         if(currentClip > 0 && !isReloading)
         {
             currentClip = Mathf.Clamp(currentClip - 1, 0, currentClipSize);
             Debug.Log("Clip Remaining: " + currentClip + "/" + currentClipSize);
-            //Apply any recoil to the handler
             if(recoilHandler!= null)
             {
                 if(isADS)
@@ -108,7 +106,6 @@ public abstract class Weapon : MonoBehaviour
                     recoilHandler.RecoilFire(maxHipFireRecoilAmounts);
                 }
             }
-            //reload if the clip is empty
             if(currentClip == 0 && !isReloading)
             {
                 Reload();
@@ -117,24 +114,20 @@ public abstract class Weapon : MonoBehaviour
     }
     public virtual void Reload()
     {
-        //Invoke the reload functionality after the reload time isover
         isReloading= true;
         Debug.Log("Reloading...");
-        Invoke("ReloadFunctionality", currentReloadTime);
+        Invoke("ReloadFunctionality", baseReloadTime);
     }
     private void ReloadFunctionality()
     {
-        //make sure we have some ammo
         if (currentAmmo > 0)
         {
-            //if the ammo in the stockpile is less than our clipsize then add the remaining stockpile to the clip
             if (currentAmmo >= currentClipSize)
             {
                 int remainingClip = currentClipSize - currentClip;
                 currentClip = currentClipSize;
                 currentAmmo -= remainingClip;
             }
-            //if the ammo in the stockpile is greater than our clipsize then refill the whole thing
             else
             {
                 currentClip = currentAmmo;
@@ -146,16 +139,15 @@ public abstract class Weapon : MonoBehaviour
     }
     private IEnumerator ChangeADSState(bool desiredState)
     {
-        //Set our target position depending on our desired state
         Vector3 targetPosition = desiredState ? adsWeaponPosition : hipFireWeaponPosition;
         float adsSpeed = Vector3.Distance(hipFireWeaponPosition, adsWeaponPosition) / adsTransitionTime;
-        //Move towards determined target position 
+
         while(transform.localPosition != targetPosition)
         {
             transform.localPosition = Vector3.MoveTowards(transform.localPosition, targetPosition, adsSpeed * Time.deltaTime);
             yield return null;
         }
-        //Change our ADS state depending on where we moved to
+
         if(transform.localPosition == adsWeaponPosition)
         {
             isADS = true;
