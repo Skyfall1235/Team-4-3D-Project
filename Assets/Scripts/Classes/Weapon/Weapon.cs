@@ -5,6 +5,7 @@ public abstract class Weapon : MonoBehaviour
 {
     //Weapon Options
     public bool canADS = true;
+    [SerializeField]
     protected bool isAutomatic;
 
     //Current States
@@ -12,28 +13,32 @@ public abstract class Weapon : MonoBehaviour
     protected bool isADS;
 
     //Ammo Related Variables
-    protected int maxAmmo;
+    public int maxAmmo;
     protected int currentAmmo;
-    protected int clipSize;
+    public int clipSize;
     protected int currentClip;
-    protected float reloadTime;
+    public float reloadTime;
 
     //Recoil Related Variables
-    protected Vector3 maxHipFireRecoilAmounts;
-    protected Vector3 maxADSRecoilAmounts;
+    public Vector3 maxHipFireRecoilAmounts;
+    public Vector3 maxADSRecoilAmounts;
+    [SerializeField]
     protected float recoilSnappiness;
+    [SerializeField]
     protected float recoilReturnSpeed;
 
 
     //ADS Related Variables
-    protected float adsTransitionTime;
+    public float adsTransitionTime;
+    [SerializeField]
     protected Vector3 hipFireWeaponPosition;
+    [SerializeField]
     protected Vector3 adsWeaponPosition;
     private IEnumerator currentADSCoroutine;
 
     //Accuracy Related Variables
-    protected Vector2 maxHipFireWeaponInaccuracy;
-    protected Vector2 maxADSWeaponInaccuracy;
+    public Vector2 maxHipFireWeaponInaccuracy;
+    public Vector2 maxADSWeaponInaccuracy;
 
     protected RecoilHandler recoilHandler;
 
@@ -41,9 +46,9 @@ public abstract class Weapon : MonoBehaviour
     {
         currentClip = clipSize;
         currentAmmo = maxAmmo;
-        if(recoilHandler == null && FindFirstObjectByType<RecoilHandler>() != null)
+        if(recoilHandler == null && GameManager.Instance != null && GameManager.Instance.currentPlayer != null && GameManager.Instance.currentPlayer.GetComponentInChildren<RecoilHandler>() != null)
         {
-            recoilHandler = FindFirstObjectByType<RecoilHandler>();
+            recoilHandler = GameManager.Instance.currentPlayer.GetComponentInChildren<RecoilHandler>();
         }
     }
     private void Update()

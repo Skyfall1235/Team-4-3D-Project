@@ -9,22 +9,22 @@ public class Health : MonoBehaviour, IDamagable
     protected float _invulnerabilityTimeAfterHit;
     protected bool deathTriggered = false;
     protected bool _isDead;
-    protected void SetHealthVars(int currentHealt, int maxHealth, bool invulnerable, float invulnerabilityTimeAfterHit)
+    protected void SetHealthVars(int currentHealth, int maxHealth, bool invulnerable, float invulnerabilityTimeAfterHit)
     {
-        _currentHealth = currentHealt;
+        _currentHealth = currentHealth;
         _maxHealth = maxHealth;
         _invulnerable = invulnerable;
         _invulnerabilityTimeAfterHit = invulnerabilityTimeAfterHit;
     }
     public bool IsDead
     { get { return _isDead; } }
-    protected float InvulnerabilityTimerAfterHit
+    public float InvulnerabilityTimerAfterHit
     { get { return _invulnerabilityTimeAfterHit; } set { _invulnerabilityTimeAfterHit = value; ValidateInvulnerabilityTimeAfterHit(); } }
-    protected bool Invulnerable
+    public bool Invulnerable
     { get { return _invulnerable; } set { _invulnerable = value; } }
-    protected int CurrentHealth
+    public int CurrentHealth
     { get { return _currentHealth; } set { _currentHealth = value; ValidateHealth(); } }
-    protected int MaxHealth
+    public int MaxHealth
     { get { return _maxHealth; } set { _currentHealth = value; ValidateHealth(); } }
     //method allows external sources to damage the unit
     public void Damage(int damageAmount)

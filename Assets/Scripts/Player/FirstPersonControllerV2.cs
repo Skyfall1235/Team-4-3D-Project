@@ -6,6 +6,15 @@ public class FirstPersonControllerV2 : Health
     public CapsuleCollider playerCollider;
     public Transform orientation;
     public Rigidbody rb;
+    [Header("Health")]
+    [SerializeField]
+    int startingMaxHealth = 100;
+    [SerializeField]
+    int startingCurrentHealth = 100;
+    [SerializeField]
+    bool startingInvulnerabilityState = false;
+    [SerializeField]
+    float startingInvulnerabilityTimeAfterDamage = 0.01f;
     [Header("Movement Options")]
     public float walkMoveSpeed;
     public float sprintMoveSpeed;
@@ -62,6 +71,7 @@ public class FirstPersonControllerV2 : Health
 
     public void Start()
     {
+        SetHealthVars(startingCurrentHealth, startingMaxHealth, startingInvulnerabilityState, startingInvulnerabilityTimeAfterDamage);
         playerHeight = playerCollider.height;
         crouchedHeight = playerHeight - crouchDistance;
     }
