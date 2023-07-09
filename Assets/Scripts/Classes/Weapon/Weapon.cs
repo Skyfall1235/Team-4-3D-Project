@@ -5,6 +5,7 @@ public abstract class Weapon : MonoBehaviour
 {
     //Weapon Options
     public bool canADS = true;
+    [SerializeField]
     protected bool isAutomatic;
 
     //Current States
@@ -12,38 +13,56 @@ public abstract class Weapon : MonoBehaviour
     protected bool isADS;
 
     //Ammo Related Variables
-    protected int maxAmmo;
+
+    public int baseMaxAmmo;
+    [HideInInspector]
+    public int currentMaxAmmo;
+
     protected int currentAmmo;
-    protected int clipSize;
+
+    public int baseClipSize;
+    [HideInInspector]
+    public int currentClipSize;
+
     protected int currentClip;
-    protected float reloadTime;
+
+    public float baseReloadTime;
+    [HideInInspector]
+    public float currentReloadTime;
 
     //Recoil Related Variables
-    protected Vector3 maxHipFireRecoilAmounts;
-    protected Vector3 maxADSRecoilAmounts;
+    public Vector3 maxHipFireRecoilAmounts;
+    public Vector3 maxADSRecoilAmounts;
+    [SerializeField]
     protected float recoilSnappiness;
+    [SerializeField]
     protected float recoilReturnSpeed;
 
 
     //ADS Related Variables
-    protected float adsTransitionTime;
+    public float adsTransitionTime;
+    [SerializeField]
     protected Vector3 hipFireWeaponPosition;
+    [SerializeField]
     protected Vector3 adsWeaponPosition;
     private IEnumerator currentADSCoroutine;
 
     //Accuracy Related Variables
-    protected Vector2 maxHipFireWeaponInaccuracy;
-    protected Vector2 maxADSWeaponInaccuracy;
+    public Vector2 maxHipFireWeaponInaccuracy;
+    public Vector2 maxADSWeaponInaccuracy;
 
     protected RecoilHandler recoilHandler;
 
     private void Start()
     {
-        currentClip = clipSize;
-        currentAmmo = maxAmmo;
-        if(recoilHandler == null && FindFirstObjectByType<RecoilHandler>() != null)
+        currentMaxAmmo = baseMaxAmmo;
+        currentAmmo = currentMaxAmmo;
+        currentClipSize = baseClipSize;
+        currentClip = currentClipSize;
+        currentReloadTime = baseReloadTime;
+        if(recoilHandler == null && GameManager.Instance != null && GameManager.Instance.currentPlayer != null && GameManager.Instance.currentPlayer.GetComponentInChildren<RecoilHandler>() != null)
         {
-            recoilHandler = FindFirstObjectByType<RecoilHandler>();
+            recoilHandler = GameManager.Instance.currentPlayer.GetComponentInChildren<RecoilHandler>();
         }
     }
     private void Update()
@@ -72,10 +91,12 @@ public abstract class Weapon : MonoBehaviour
     }
     public virtual void Fire()
     {
+        //only try to fire if our current clip has bullets and we aren't reloading
         if(currentClip > 0 && !isReloading)
         {
-            currentClip = Mathf.Clamp(currentClip - 1, 0, clipSize);
-            Debug.Log("Clip Remaining: " + currentClip + "/" + clipSize);
+            currentClip = Mathf.Clamp(currentClip - 1, 0, currentClipSize);
+            Debug.Log("Clip Remaining: " + currentClip + "/" + currentClipSize);
+            //Apply any recoil to the handler
             if(recoilHandler!= null)
             {
                 if(isADS)
@@ -87,6 +108,7 @@ public abstract class Weapon : MonoBehaviour
                     recoilHandler.RecoilFire(maxHipFireRecoilAmounts);
                 }
             }
+            //reload if the clip is empty
             if(currentClip == 0 && !isReloading)
             {
                 Reload();
@@ -95,20 +117,24 @@ public abstract class Weapon : MonoBehaviour
     }
     public virtual void Reload()
     {
+        //Invoke the reload functionality after the reload time isover
         isReloading= true;
         Debug.Log("Reloading...");
-        Invoke("ReloadFunctionality", reloadTime);
+        Invoke("ReloadFunctionality", currentReloadTime);
     }
     private void ReloadFunctionality()
     {
+        //make sure we have some ammo
         if (currentAmmo > 0)
         {
-            if (currentAmmo >= clipSize)
+            //if the ammo in the stockpile is less than our clipsize then add the remaining stockpile to the clip
+            if (currentAmmo >= currentClipSize)
             {
-                int remainingClip = clipSize - currentClip;
-                currentClip = clipSize;
+                int remainingClip = currentClipSize - currentClip;
+                currentClip = currentClipSize;
                 currentAmmo -= remainingClip;
             }
+            //if the ammo in the stockpile is greater than our clipsize then refill the whole thing
             else
             {
                 currentClip = currentAmmo;
@@ -120,15 +146,16 @@ public abstract class Weapon : MonoBehaviour
     }
     private IEnumerator ChangeADSState(bool desiredState)
     {
+        //Set our target position depending on our desired state
         Vector3 targetPosition = desiredState ? adsWeaponPosition : hipFireWeaponPosition;
         float adsSpeed = Vector3.Distance(hipFireWeaponPosition, adsWeaponPosition) / adsTransitionTime;
-
+        //Move towards determined target position 
         while(transform.localPosition != targetPosition)
         {
             transform.localPosition = Vector3.MoveTowards(transform.localPosition, targetPosition, adsSpeed * Time.deltaTime);
             yield return null;
         }
-
+        //Change our ADS state depending on where we moved to
         if(transform.localPosition == adsWeaponPosition)
         {
             isADS = true;

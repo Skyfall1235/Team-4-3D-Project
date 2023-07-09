@@ -4,28 +4,30 @@ using UnityEngine;
 public class Health : MonoBehaviour, IDamagable
 {
     protected int _currentHealth;
-    protected int _maxHealth;
+    protected int _baseMaxHealth;
+    protected int _currentMaxHealth;
     protected bool _invulnerable;
     protected float _invulnerabilityTimeAfterHit;
     protected bool deathTriggered = false;
     protected bool _isDead;
-    protected void SetHealthVars(int currentHealt, int maxHealth, bool invulnerable, float invulnerabilityTimeAfterHit)
+    protected void SetHealthVars(int currentHealth, int maxHealth, bool invulnerable, float invulnerabilityTimeAfterHit)
     {
-        _currentHealth = currentHealt;
-        _maxHealth = maxHealth;
+        _currentHealth = currentHealth;
+        _baseMaxHealth = _currentMaxHealth = maxHealth;
         _invulnerable = invulnerable;
         _invulnerabilityTimeAfterHit = invulnerabilityTimeAfterHit;
     }
+    public int BaseMaxHealth { get { return _baseMaxHealth; } set { _baseMaxHealth = value; } }
     public bool IsDead
     { get { return _isDead; } }
-    protected float InvulnerabilityTimerAfterHit
+    public float InvulnerabilityTimerAfterHit
     { get { return _invulnerabilityTimeAfterHit; } set { _invulnerabilityTimeAfterHit = value; ValidateInvulnerabilityTimeAfterHit(); } }
-    protected bool Invulnerable
+    public bool Invulnerable
     { get { return _invulnerable; } set { _invulnerable = value; } }
-    protected int CurrentHealth
+    public int CurrentHealth
     { get { return _currentHealth; } set { _currentHealth = value; ValidateHealth(); } }
-    protected int MaxHealth
-    { get { return _maxHealth; } set { _currentHealth = value; ValidateHealth(); } }
+    public int currentMaxHealth
+    { get { return _currentMaxHealth; } set { _currentMaxHealth = value; ValidateHealth(); } }
     //method allows external sources to damage the unit
     public void Damage(int damageAmount)
     {
@@ -46,9 +48,9 @@ public class Health : MonoBehaviour, IDamagable
     //method allows external sources to heal the unit
     public void Heal(int healAmount)
     {
-        if (_currentHealth < _maxHealth)
+        if (_currentHealth < _currentMaxHealth)
         {
-            _currentHealth = Mathf.Clamp(_currentHealth + healAmount, _currentHealth, MaxHealth);
+            _currentHealth = Mathf.Clamp(_currentHealth + healAmount, _currentHealth, currentMaxHealth);
             OnHealed();
             ValidateHealth();
         }
@@ -56,9 +58,9 @@ public class Health : MonoBehaviour, IDamagable
     //method allows external sources to heal the unit to its maximum health
     protected void MaxHeal()
     {
-        if (_currentHealth < _maxHealth)
+        if (_currentHealth < _currentMaxHealth)
         {
-            _currentHealth = _maxHealth;
+            _currentHealth = _currentMaxHealth;
             OnHealed();
             ValidateHealth();
         }
@@ -102,9 +104,9 @@ public class Health : MonoBehaviour, IDamagable
     //make sure the health is within specified ranges after any changes
     protected void ValidateHealth()
     {
-        if (_currentHealth > _maxHealth)
+        if (_currentHealth > _currentMaxHealth)
         {
-            _currentHealth = _maxHealth;
+            _currentHealth = _currentMaxHealth;
             deathTriggered = false;
         }
         if (_currentHealth <= 0)

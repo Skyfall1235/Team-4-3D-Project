@@ -6,10 +6,29 @@ public class FirstPersonControllerV2 : Health
     public CapsuleCollider playerCollider;
     public Transform orientation;
     public Rigidbody rb;
+    [Header("Health")]
+    [SerializeField]
+    int startingMaxHealth = 100;
+    [SerializeField]
+    int startingCurrentHealth = 100;
+    [SerializeField]
+    bool startingInvulnerabilityState = false;
+    [SerializeField]
+    float startingInvulnerabilityTimeAfterDamage = 0.01f;
     [Header("Movement Options")]
-    public float walkMoveSpeed;
-    public float sprintMoveSpeed;
-    public float crouchMoveSpeed;
+
+    public float baseWalkMoveSpeed;
+    [HideInInspector]
+    public float currentWalkMoveSpeed;
+
+    public float baseSprintMoveSpeed;
+    [HideInInspector]
+    public float currentSprintMoveSpeed;
+
+    public float baseCrouchMoveSpeed;
+    [HideInInspector]
+    public float currentCrouchMoveSpeed;
+
     public float maxGroundAcceleration;
     public float maxGroundDeceleration;
     public float maxAirAcceleration;
@@ -62,6 +81,10 @@ public class FirstPersonControllerV2 : Health
 
     public void Start()
     {
+        SetHealthVars(startingCurrentHealth, startingMaxHealth, startingInvulnerabilityState, startingInvulnerabilityTimeAfterDamage);
+        currentWalkMoveSpeed = baseWalkMoveSpeed;
+        currentSprintMoveSpeed = baseSprintMoveSpeed;
+        currentCrouchMoveSpeed= baseCrouchMoveSpeed;
         playerHeight = playerCollider.height;
         crouchedHeight = playerHeight - crouchDistance;
     }
@@ -89,7 +112,7 @@ public class FirstPersonControllerV2 : Health
             Uncrouch();
         }
         //if we have a certain amount of speed and we desire to crouch, then slide
-        if (desiredCrouchState == true && modifiedVelocity.magnitude > walkMoveSpeed)
+        if (desiredCrouchState == true && modifiedVelocity.magnitude > currentWalkMoveSpeed)
         {
             isSliding = true;
 
@@ -140,17 +163,17 @@ public class FirstPersonControllerV2 : Health
         //if the sprint key is pressed and we aren't crouched or sliding, set our desired spreed to the sprint speed
         if (Input.GetKey(sprintKey) && desiredCrouchState == false && isSliding == false)
         {
-            desiredSpeed = walkMoveSpeed + (Mathf.Clamp(Vector3.Dot(new Vector3(rb.velocity.x, 0, rb.velocity.z).normalized, orientation.forward), 0, 1) * (sprintMoveSpeed - walkMoveSpeed));
+            desiredSpeed = currentWalkMoveSpeed + (Mathf.Clamp(Vector3.Dot(new Vector3(rb.velocity.x, 0, rb.velocity.z).normalized, orientation.forward), 0, 1) * (currentSprintMoveSpeed - currentWalkMoveSpeed));
         }
         //if the we are crouching or sliding, change the desired move speed to crouch move speed so we can smoothly transition between the sliding and crouched state
         else if (currentCrouchState == true || isSliding == true)
         {
-            desiredSpeed = crouchMoveSpeed;
+            desiredSpeed = currentCrouchMoveSpeed;
         }
         //otherwise, set our move speed to our walking speed
         else
         {
-            desiredSpeed = walkMoveSpeed;
+            desiredSpeed = currentWalkMoveSpeed;
         }
         if (Input.GetKeyDown(crouchKey))
         {

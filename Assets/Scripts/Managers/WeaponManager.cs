@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class WeaponManager : MonoBehaviour
 {
-    public Weapon currentGun;
-    
+    public List<Weapon> weaponInventory;
+    public Weapon currentWeapon;
     // Start is called before the first frame update
     void Awake()
     {
-
+        UpdateWeaponInventory();
     }
 
     // Update is called once per frame
@@ -17,22 +17,31 @@ public class WeaponManager : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            currentGun.Fire();
+            currentWeapon.Fire();
         }
-        if (currentGun.canADS)
+        if (currentWeapon.canADS)
         {
             if (Input.GetButtonDown("Fire2"))
             {
-                currentGun.ChangeADS(true);
+                currentWeapon.ChangeADS(true);
             }
             if (Input.GetButtonUp("Fire2"))
             {
-                currentGun.ChangeADS(false);
+                currentWeapon.ChangeADS(false);
             }
         }
         if (Input.GetButtonDown("Reload"))
         {
-            currentGun.Reload();
+            currentWeapon.Reload();
+        }
+    }
+    void UpdateWeaponInventory()
+    {
+        weaponInventory.Clear();
+        Weapon[] weaponsUnderManager = GetComponentsInChildren<Weapon>();
+        foreach (Weapon weapon in weaponsUnderManager)
+        {
+            weaponInventory.Add(weapon);
         }
     }
 }
