@@ -6,14 +6,12 @@ using UnityEngine;
 
 public class Pistol : Weapon
 {
-    [SerializeField] Vector3 hipFirePosition;
-    [SerializeField] Vector3 adsPosition;
     [SerializeField] int weaponPenetrationPower = 1;
     [SerializeField] float maxFireDistance = 1200f;
     [SerializeField] LayerMask bulletLayerMask;
     [SerializeField] int weaponDamage = 20;
     Camera playerCam;
-    float remainingPenetrations;
+    int remainingPenetrations;
     public override void Fire()
     {
         if(!isReloading)
@@ -48,16 +46,17 @@ public class Pistol : Weapon
     }
     public override void Reload()
     {
-        if(SoundManager.Instance != null)
+        if(!isReloading && currentClip != currentClipSize)
         {
-            SoundManager.Instance.PlaySoundOnObject(gameObject, "Pistol Reload", false);
+            base.Reload();
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlaySoundOnObject(gameObject, "Pistol Reload", false);
+            }
         }
-        base.Reload();
     }
     private void Awake()
     {
         playerCam = Camera.main;
-        hipFireWeaponPosition = hipFirePosition;
-        adsWeaponPosition= adsPosition;
     }
 }

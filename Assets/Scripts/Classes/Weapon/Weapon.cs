@@ -13,11 +13,22 @@ public abstract class Weapon : MonoBehaviour
     protected bool isADS;
 
     //Ammo Related Variables
-    public int maxAmmo;
+
+    public int baseMaxAmmo;
+    [HideInInspector]
+    public int currentMaxAmmo;
+
     protected int currentAmmo;
-    public int clipSize;
+
+    public int baseClipSize;
+    [HideInInspector]
+    public int currentClipSize;
+
     protected int currentClip;
-    public float reloadTime;
+
+    public float baseReloadTime;
+    [HideInInspector]
+    public float currentReloadTime;
 
     //Recoil Related Variables
     public Vector3 maxHipFireRecoilAmounts;
@@ -44,8 +55,11 @@ public abstract class Weapon : MonoBehaviour
 
     private void Start()
     {
-        currentClip = clipSize;
-        currentAmmo = maxAmmo;
+        currentMaxAmmo = baseMaxAmmo;
+        currentAmmo = currentMaxAmmo;
+        currentClipSize = baseClipSize;
+        currentClip = currentClipSize;
+        currentReloadTime = baseReloadTime;
         if(recoilHandler == null && GameManager.Instance != null && GameManager.Instance.currentPlayer != null && GameManager.Instance.currentPlayer.GetComponentInChildren<RecoilHandler>() != null)
         {
             recoilHandler = GameManager.Instance.currentPlayer.GetComponentInChildren<RecoilHandler>();
@@ -79,8 +93,8 @@ public abstract class Weapon : MonoBehaviour
     {
         if(currentClip > 0 && !isReloading)
         {
-            currentClip = Mathf.Clamp(currentClip - 1, 0, clipSize);
-            Debug.Log("Clip Remaining: " + currentClip + "/" + clipSize);
+            currentClip = Mathf.Clamp(currentClip - 1, 0, currentClipSize);
+            Debug.Log("Clip Remaining: " + currentClip + "/" + currentClipSize);
             if(recoilHandler!= null)
             {
                 if(isADS)
@@ -102,16 +116,16 @@ public abstract class Weapon : MonoBehaviour
     {
         isReloading= true;
         Debug.Log("Reloading...");
-        Invoke("ReloadFunctionality", reloadTime);
+        Invoke("ReloadFunctionality", baseReloadTime);
     }
     private void ReloadFunctionality()
     {
         if (currentAmmo > 0)
         {
-            if (currentAmmo >= clipSize)
+            if (currentAmmo >= currentClipSize)
             {
-                int remainingClip = clipSize - currentClip;
-                currentClip = clipSize;
+                int remainingClip = currentClipSize - currentClip;
+                currentClip = currentClipSize;
                 currentAmmo -= remainingClip;
             }
             else
