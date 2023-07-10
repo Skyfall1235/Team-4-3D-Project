@@ -2733,6 +2733,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1657279782}
     - target: {fileID: 7127783245596588918, guid: 288ccc3362046a846b9d3ec8676d41f5, type: 3}
+      propertyPath: baseWalkMoveSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127783245596588918, guid: 288ccc3362046a846b9d3ec8676d41f5, type: 3}
+      propertyPath: baseCrouchMoveSpeed
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127783245596588918, guid: 288ccc3362046a846b9d3ec8676d41f5, type: 3}
+      propertyPath: baseSprintMoveSpeed
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127783245596588918, guid: 288ccc3362046a846b9d3ec8676d41f5, type: 3}
       propertyPath: maxGroundDeceleration
       value: 10
       objectReference: {fileID: 0}
