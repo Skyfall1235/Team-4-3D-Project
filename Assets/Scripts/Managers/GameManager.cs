@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     GameObject[] foundPlayers;
     public GameObject currentPlayer { get; private set; }
+    public Transform playerCharacterTransform { get; private set; }
     private void Awake()
     {
         //Manage singleton instance of GameManager
@@ -32,6 +33,10 @@ public class GameManager : MonoBehaviour
             {
                 currentPlayer= foundPlayers[0];
             }
+        }
+        if(currentPlayer != null) 
+        {
+            playerCharacterTransform = currentPlayer.GetComponentInChildren<FirstPersonControllerV2>().gameObject.transform;
         }
         
     }

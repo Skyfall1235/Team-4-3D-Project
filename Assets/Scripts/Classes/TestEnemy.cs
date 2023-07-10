@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent)), RequireComponent(typeof(Animator))]
 public class TestEnemy : Health
 {
+    //Inspector Variables
     [SerializeField]
     int startingHealth;
     [SerializeField]
@@ -12,10 +15,31 @@ public class TestEnemy : Health
     bool startingInvulnerableState;
     [SerializeField]
     float startingInvulnerabilityTimeAfterHit;
-    // Start is called before the first frame update
+
+    //Private Variables
+    NavMeshAgent agent;
+    Animator animator;
+
     void Awake()
     {
         OnValidate();
+        if(GetComponent<NavMeshAgent>() != null )
+        {
+            agent = GetComponent<NavMeshAgent>();
+        }
+        if(GetComponent<Animator>() != null )
+        {
+            animator = GetComponent<Animator>();
+        }
+    }
+    private void Update()
+    {
+        if(animator != null)
+        {
+            animator.SetFloat("Move Speed", new Vector3(agent.velocity.x, 0, agent.velocity.z).magnitude);
+            
+        }
+        agent.SetDestination(GameManager.Instance.playerCharacterTransform.position);
     }
     private void OnValidate()
     {
@@ -29,6 +53,10 @@ public class TestEnemy : Health
         Debug.Log(CurrentHealth.ToString());
     }
     public override void OnDeath()
+    {
+        animator.SetBool("Dead", true);
+    }
+    public void PostDeathAnimationFunctionaility()
     {
         Destroy(gameObject);
     }
