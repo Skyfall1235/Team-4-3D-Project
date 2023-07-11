@@ -15,6 +15,8 @@ public class TestEnemy : Health
     bool startingInvulnerableState;
     [SerializeField]
     float startingInvulnerabilityTimeAfterHit;
+    [SerializeField]
+    float attackStartRange = 3f;
 
     //Private Variables
     NavMeshAgent agent;
@@ -37,7 +39,15 @@ public class TestEnemy : Health
         if(animator != null)
         {
             animator.SetFloat("Move Speed", new Vector3(agent.velocity.x, 0, agent.velocity.z).magnitude);
-            
+            if(Vector3.Distance(transform.position, GameManager.Instance.playerCharacterTransform.position) < attackStartRange && !IsDead)
+            {
+                animator.SetInteger("Attack Index", Random.Range(0, 2));
+                animator.SetBool("Attack", true);
+            }
+            else
+            {
+                animator.SetBool("Attack", false);
+            }
         }
         if (!IsDead)
         {
