@@ -39,7 +39,14 @@ public class TestEnemy : Health
             animator.SetFloat("Move Speed", new Vector3(agent.velocity.x, 0, agent.velocity.z).magnitude);
             
         }
-        agent.SetDestination(GameManager.Instance.playerCharacterTransform.position);
+        if (!IsDead)
+        {
+            agent.SetDestination(GameManager.Instance.playerCharacterTransform.position);
+        }
+        else
+        {
+            agent.isStopped = true;
+        }
     }
     private void OnValidate()
     {
