@@ -38,11 +38,11 @@ public class Pistol : Weapon
             //Each time the bullet comes into contact with something, decrease its penetration amount and add required effects
             for (int i = 0; i < raycastHitDistances.Count && remainingPenetrations > 0; i++)
             {
-                if (raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponent<IDamagable>() != null)
+                if (raycastHitDistances.ElementAt(i).Value.collider.gameObject.transform.root.GetComponentInChildren<IDamagable>() != null)
                 {
-                    raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponent<IDamagable>().Damage(weaponDamage);
+                    raycastHitDistances.ElementAt(i).Value.collider.gameObject.transform.root.GetComponentInChildren<IDamagable>().Damage(weaponDamage);
                 }
-                if(raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>() != null)
+                if(raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>() != null && !raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>().isKinematic)
                 {
                     raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>().AddForce(playerCam.transform.forward * 2, ForceMode.Impulse);
                 }
