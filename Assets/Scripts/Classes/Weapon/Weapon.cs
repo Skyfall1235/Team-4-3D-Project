@@ -3,51 +3,43 @@ using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
 {
-    //Weapon Options
+    [Header("General Weapon Options")]
     public bool canADS = true;
-    [SerializeField]
-    protected bool isAutomatic;
+     public bool IsAutomatic { get { return _isAutomatic; }}
+    [SerializeField] protected bool _isAutomatic;
+    [SerializeField] protected float fireCooldown;
+    [SerializeField] protected int weaponPenetrationPower = 1;
+    [SerializeField] protected float maxFireDistance = 1200f;
+    [SerializeField] protected LayerMask bulletLayerMask;
+    [SerializeField] protected int weaponDamage = 20;
 
     //Current States
-    protected bool isReloading;
-    protected bool isADS;
+    public bool isReloading { get; private set; }
+    public bool isADS { get; private set; }
 
-    //Ammo Related Variables
-
+    [Header("Ammo Options")]
     public int baseMaxAmmo;
-    [HideInInspector]
-    public int currentMaxAmmo;
-
+    [HideInInspector] public int currentMaxAmmo;
     protected int currentAmmo;
-
     public int baseClipSize;
-    [HideInInspector]
-    public int currentClipSize;
-
+    [HideInInspector] public int currentClipSize;
     protected int currentClip;
-
     public float baseReloadTime;
-    [HideInInspector]
-    public float currentReloadTime;
+    [HideInInspector] public float currentReloadTime;
 
-    //Recoil Related Variables
+    [Header("Recoil Options")]
     public Vector3 maxHipFireRecoilAmounts;
     public Vector3 maxADSRecoilAmounts;
-    [SerializeField]
-    protected float recoilSnappiness;
-    [SerializeField]
-    protected float recoilReturnSpeed;
+    [SerializeField] protected float recoilSnappiness;
+    [SerializeField] protected float recoilReturnSpeed;
 
-
-    //ADS Related Variables
+    [Header("ADS Options")]
     public float adsTransitionTime;
-    [SerializeField]
-    protected Vector3 hipFireWeaponPosition;
-    [SerializeField]
-    protected Vector3 adsWeaponPosition;
+    [SerializeField] protected Vector3 hipFireWeaponPosition;
+    [SerializeField] protected Vector3 adsWeaponPosition;
     private IEnumerator currentADSCoroutine;
 
-    //Accuracy Related Variables
+    [Header("Accuracy Options")]
     public Vector2 maxHipFireWeaponInaccuracy;
     public Vector2 maxADSWeaponInaccuracy;
 
@@ -69,7 +61,7 @@ public abstract class Weapon : MonoBehaviour
     {
         if(recoilHandler!= null)
         {
-            recoilHandler.HandleRecoil(recoilReturnSpeed, recoilSnappiness);
+            recoilHandler.HandleRecoilReturn(recoilReturnSpeed, recoilSnappiness);
         }
     }
     public void ChangeADS(bool desiredState)
@@ -91,28 +83,24 @@ public abstract class Weapon : MonoBehaviour
     }
     public virtual void Fire()
     {
-        //only try to fire if our current clip has bullets and we aren't reloading
-        if(currentClip > 0 && !isReloading)
+        currentClip = Mathf.Clamp(currentClip - 1, 0, currentClipSize);
+        Debug.Log("Clip Remaining: " + currentClip + "/" + currentClipSize);
+        //Apply any recoil to the handler
+        if(recoilHandler!= null)
         {
-            currentClip = Mathf.Clamp(currentClip - 1, 0, currentClipSize);
-            Debug.Log("Clip Remaining: " + currentClip + "/" + currentClipSize);
-            //Apply any recoil to the handler
-            if(recoilHandler!= null)
+            if(isADS)
             {
-                if(isADS)
-                {
-                    recoilHandler.RecoilFire(maxADSRecoilAmounts);
-                }
-                else
-                {
-                    recoilHandler.RecoilFire(maxHipFireRecoilAmounts);
-                }
+                recoilHandler.RecoilFire(maxADSRecoilAmounts);
             }
-            //reload if the clip is empty
-            if(currentClip == 0 && !isReloading)
+            else
             {
-                Reload();
+                recoilHandler.RecoilFire(maxHipFireRecoilAmounts);
             }
+        }
+        //reload if the clip is empty
+        if(currentClip == 0 && !isReloading)
+        {
+            Reload();
         }
     }
     public virtual void Reload()

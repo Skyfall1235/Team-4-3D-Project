@@ -15,10 +15,21 @@ public class WeaponManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (currentWeapon.IsAutomatic)
         {
-            currentWeapon.Fire();
+            if (Input.GetButton("Fire1"))
+            {
+                currentWeapon.Fire();
+            }
         }
+        else
+        {
+            if (Input.GetButtonDown("Fire1"))
+            {
+                currentWeapon.Fire();
+            }
+        }
+
         if (currentWeapon.canADS)
         {
             if (Input.GetButtonDown("Fire2"))

@@ -7,7 +7,7 @@ public class RecoilHandler : MonoBehaviour
     Vector3 targetRotation;
     Vector3 currentRotation;
 
-    public void HandleRecoil(float returnSpeed, float snapiness)
+    public void HandleRecoilReturn(float returnSpeed, float snapiness)
     {
         targetRotation = Vector3.Lerp(targetRotation, Vector3.zero, returnSpeed * Time.deltaTime);
         currentRotation = Vector3.Slerp(currentRotation, targetRotation, snapiness * Time.fixedDeltaTime);

@@ -6,16 +6,13 @@ using UnityEngine;
 
 public class Pistol : Weapon
 {
-    [SerializeField] int weaponPenetrationPower = 1;
-    [SerializeField] float maxFireDistance = 1200f;
-    [SerializeField] LayerMask bulletLayerMask;
-    [SerializeField] int weaponDamage = 20;
     Camera playerCam;
     int remainingPenetrations;
+    bool canFire = true;
     public override void Fire()
     {
         //If we are not reloading and our clip has bullets in it
-        if(!isReloading && currentClip > 0)
+        if(!isReloading && currentClip > 0 && canFire)
         {
             //play fire sound
             if(SoundManager.Instance != null)
@@ -48,9 +45,12 @@ public class Pistol : Weapon
                 }
                 remainingPenetrations--;
             }
+            //Deal with fire cooldown
+            canFire= false;
+            Invoke("FinishFireCooldown", fireCooldown);
+            //Base fire functionality
+            base.Fire();
         }
-        //Base fire functionality
-        base.Fire();
     }
     public override void Reload()
     {
@@ -67,5 +67,9 @@ public class Pistol : Weapon
     private void Awake()
     {
         playerCam = Camera.main;
+    }
+    private void FinishFireCooldown()
+    {
+        canFire = true;
     }
 }
