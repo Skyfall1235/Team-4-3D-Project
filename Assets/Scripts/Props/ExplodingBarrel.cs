@@ -66,11 +66,13 @@ public class ExplodingBarrel : MonoBehaviour, IDamagable, IResetable
                 mr.enabled = false;
             }
             Collider[] objectsInBlastRange = Physics.OverlapSphere(transform.position, explosionRadius);
+            List<GameObject> damagedObjects= new List<GameObject>();
             foreach (Collider obj in objectsInBlastRange)
             {
-                if (obj.gameObject.GetComponent<IDamagable>() != null)
+                if(obj.transform.root.gameObject.GetComponentInChildren<IDamagable>() != null && !damagedObjects.Contains(obj.transform.root.gameObject)) 
                 {
-                    obj.gameObject.GetComponent<IDamagable>().Damage(explosionDamage);
+                    obj.transform.root.gameObject.GetComponentInChildren<IDamagable>().Damage(explosionDamage);
+                    damagedObjects.Add(obj.transform.root.gameObject);
                 }
             }
             hasExploded = true;
