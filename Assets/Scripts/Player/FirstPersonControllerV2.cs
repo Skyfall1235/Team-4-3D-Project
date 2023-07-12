@@ -421,4 +421,9 @@ public class FirstPersonControllerV2 : Health
 
         }
     }
+
+    public override void OnDamaged()
+    {
+        Debug.Log("Hit");
+    }
 }

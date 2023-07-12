@@ -20,7 +20,7 @@ public abstract class Weapon : MonoBehaviour
     [Header("Ammo Options")]
     public int baseMaxAmmo;
     [HideInInspector] public int currentMaxAmmo;
-    protected int currentAmmo;
+    [HideInInspector] public int currentAmmo;
     public int baseClipSize;
     [HideInInspector] public int currentClipSize;
     protected int currentClip;
