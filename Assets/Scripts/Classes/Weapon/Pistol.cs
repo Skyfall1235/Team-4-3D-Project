@@ -1,21 +1,18 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Pistol : Weapon
 {
-    Camera playerCam;
     int remainingPenetrations;
     bool canFire = true;
     public override void Fire()
     {
         //If we are not reloading and our clip has bullets in it
-        if(!isReloading && currentClip > 0 && canFire)
+        if (!isReloading && currentClip > 0 && canFire && playerCam != null)
         {
             //play fire sound
-            if(SoundManager.Instance != null)
+            if (SoundManager.Instance != null)
             {
                 SoundManager.Instance.PlaySoundOnObject(gameObject, "Pistol Shot", false);
             }
@@ -29,7 +26,7 @@ public class Pistol : Weapon
             //add the raycast hit distances and the corrosponding raycast hit to the sorted dictionary so we can go through the elements and decrease our remaining penetrations after each hit
             foreach (RaycastHit hit in bulletHits)
             {
-                if(!raycastHitDistances.ContainsKey(Vector3.Distance(playerCam.transform.position, hit.point)))
+                if (!raycastHitDistances.ContainsKey(Vector3.Distance(playerCam.transform.position, hit.point)))
                 {
                     raycastHitDistances.Add(Vector3.Distance(playerCam.transform.position, hit.point), hit);
                 }
@@ -42,22 +39,23 @@ public class Pistol : Weapon
                 {
                     raycastHitDistances.ElementAt(i).Value.collider.gameObject.transform.root.GetComponentInChildren<IDamagable>().Damage(weaponDamage);
                 }
-                if(raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>() != null && !raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>().isKinematic)
+                if (raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>() != null && !raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>().isKinematic)
                 {
                     raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>().AddForce(playerCam.transform.forward * 2, ForceMode.Impulse);
                 }
                 remainingPenetrations--;
             }
             //Deal with fire cooldown
-            canFire= false;
+            canFire = false;
             Invoke("FinishFireCooldown", fireCooldown);
             //Base fire functionality
             base.Fire();
         }
+        
     }
     public override void Reload()
     {
-        if(!isReloading && currentClip != currentClipSize)
+        if (!isReloading && currentClip != currentClipSize)
         {
             //Do our reload functionality and play sound
             base.Reload();
@@ -67,10 +65,7 @@ public class Pistol : Weapon
             }
         }
     }
-    private void Awake()
-    {
-        playerCam = Camera.main;
-    }
+
     private void FinishFireCooldown()
     {
         canFire = true;

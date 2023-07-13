@@ -45,26 +45,29 @@ public class UpgradeManager : MonoBehaviour
     }
     void ApplyUpgrades()
     {
-        //Handle health upgrades
-        GameManager.Instance.currentPlayer.GetComponentInChildren<FirstPersonControllerV2>().currentMaxHealth = GameManager.Instance.currentPlayer.GetComponentInChildren<FirstPersonControllerV2>().BaseMaxHealth + (maxHealthUpgrades * maxHealthUpgradeAmount);
-        //Handle move speed Upgrades
-        GameManager.Instance.currentPlayer.GetComponentInChildren<FirstPersonControllerV2>().currentWalkMoveSpeed = GameManager.Instance.currentPlayer.GetComponentInChildren<FirstPersonControllerV2>().baseWalkMoveSpeed + (playerMoveSpeedUpgrades * playerMoveSpeedUpgradeAmount);
-        GameManager.Instance.currentPlayer.GetComponentInChildren<FirstPersonControllerV2>().currentSprintMoveSpeed = GameManager.Instance.currentPlayer.GetComponentInChildren<FirstPersonControllerV2>().baseSprintMoveSpeed + (playerMoveSpeedUpgrades * playerMoveSpeedUpgradeAmount);
-        GameManager.Instance.currentPlayer.GetComponentInChildren<FirstPersonControllerV2>().currentCrouchMoveSpeed = GameManager.Instance.currentPlayer.GetComponentInChildren<FirstPersonControllerV2>().baseCrouchMoveSpeed + (playerMoveSpeedUpgrades * playerMoveSpeedUpgradeAmount);
-        foreach (Weapon weapon in GameManager.Instance.currentPlayer.GetComponentInChildren<WeaponManager>().weaponInventory)
+        if(GameManager.Instance.currentPlayer != null)
         {
-            //Handle clip size upgrades
-            weapon.currentClipSize = weapon.baseClipSize + (clipSizeUpgrades * maxClipSizeUpgradeAmount);
-            //Handle max ammo upgrades
-            weapon.currentMaxAmmo = weapon.baseMaxAmmo + (maxAmmoUpgrades * maxAmmoUpgradeAmount);
-            //Handle reload speed upgrade
-            float newReloadSpeed = weapon.baseReloadTime;
-            for(int i = 0; i < reloadSpeedUpgrades; i++)
+            //Handle health upgrades
+            GameManager.Instance.currentPlayer.GetComponentInChildren<FirstPersonControllerV2>().currentMaxHealth = GameManager.Instance.currentPlayer.GetComponentInChildren<FirstPersonControllerV2>().BaseMaxHealth + (maxHealthUpgrades * maxHealthUpgradeAmount);
+            //Handle move speed Upgrades
+            GameManager.Instance.currentPlayer.GetComponentInChildren<FirstPersonControllerV2>().currentWalkMoveSpeed = GameManager.Instance.currentPlayer.GetComponentInChildren<FirstPersonControllerV2>().baseWalkMoveSpeed + (playerMoveSpeedUpgrades * playerMoveSpeedUpgradeAmount);
+            GameManager.Instance.currentPlayer.GetComponentInChildren<FirstPersonControllerV2>().currentSprintMoveSpeed = GameManager.Instance.currentPlayer.GetComponentInChildren<FirstPersonControllerV2>().baseSprintMoveSpeed + (playerMoveSpeedUpgrades * playerMoveSpeedUpgradeAmount);
+            GameManager.Instance.currentPlayer.GetComponentInChildren<FirstPersonControllerV2>().currentCrouchMoveSpeed = GameManager.Instance.currentPlayer.GetComponentInChildren<FirstPersonControllerV2>().baseCrouchMoveSpeed + (playerMoveSpeedUpgrades * playerMoveSpeedUpgradeAmount);
+            foreach (Weapon weapon in GameManager.Instance.currentPlayer.GetComponentInChildren<WeaponManager>().weaponInventory)
             {
-                newReloadSpeed *= reloadSpeedUpgrades;
-            }
-            weapon.currentReloadTime= newReloadSpeed;
+                //Handle clip size upgrades
+                weapon.currentClipSize = weapon.baseClipSize + (clipSizeUpgrades * maxClipSizeUpgradeAmount);
+                //Handle max ammo upgrades
+                weapon.currentMaxAmmo = weapon.baseMaxAmmo + (maxAmmoUpgrades * maxAmmoUpgradeAmount);
+                //Handle reload speed upgrade
+                float newReloadSpeed = weapon.baseReloadTime;
+                for (int i = 0; i < reloadSpeedUpgrades; i++)
+                {
+                    newReloadSpeed *= reloadSpeedUpgrades;
+                }
+                weapon.currentReloadTime = newReloadSpeed;
 
+            }
         }
     } 
 }

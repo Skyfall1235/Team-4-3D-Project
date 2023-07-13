@@ -44,6 +44,7 @@ public abstract class Weapon : MonoBehaviour
     public Vector2 maxADSWeaponInaccuracy;
 
     protected RecoilHandler recoilHandler;
+    protected Camera playerCam;
 
     private void Start()
     {
@@ -52,6 +53,7 @@ public abstract class Weapon : MonoBehaviour
         currentClipSize = baseClipSize;
         currentClip = currentClipSize;
         currentReloadTime = baseReloadTime;
+        AquirePlayerCam();
         if(recoilHandler == null && GameManager.Instance != null && GameManager.Instance.currentPlayer != null && GameManager.Instance.currentPlayer.GetComponentInChildren<RecoilHandler>() != null)
         {
             recoilHandler = GameManager.Instance.currentPlayer.GetComponentInChildren<RecoilHandler>();
@@ -62,6 +64,10 @@ public abstract class Weapon : MonoBehaviour
         if(recoilHandler!= null)
         {
             recoilHandler.HandleRecoilReturn(recoilReturnSpeed, recoilSnappiness);
+        }
+        if(playerCam == null)
+        {
+            AquirePlayerCam();
         }
     }
     public void ChangeADS(bool desiredState)
@@ -151,6 +157,13 @@ public abstract class Weapon : MonoBehaviour
         if(transform.localPosition == hipFireWeaponPosition)
         {
             isADS = false;
+        }
+    }
+    private void AquirePlayerCam()
+    {
+        if (GameManager.Instance != null && GameManager.Instance.currentPlayer != null && GameManager.Instance.currentPlayer.transform.root.GetComponentInChildren<Camera>() != null)
+        {
+            playerCam = GameManager.Instance.currentPlayer.transform.root.GetComponentInChildren<Camera>();
         }
     }
 }

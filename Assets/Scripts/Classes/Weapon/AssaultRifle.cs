@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class AssaultRifle : Weapon
 {
-    Camera playerCam;
     int remainingPenetrations;
     bool canFire = true;
     public override void Fire()
@@ -67,7 +66,10 @@ public class AssaultRifle : Weapon
     }
     private void Awake()
     {
-        playerCam = Camera.main;
+        if (GameManager.Instance != null && GameManager.Instance.currentPlayer != null && GameManager.Instance.currentPlayer.transform.root.GetComponentInChildren<Camera>() != null)
+        {
+            playerCam = GameManager.Instance.currentPlayer.transform.root.GetComponentInChildren<Camera>();
+        }
     }
     private void FinishFireCooldown()
     {

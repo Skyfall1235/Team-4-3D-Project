@@ -9,8 +9,6 @@ public class Shotgun : Weapon
     [Header("Weapon Specific Options")]
     [SerializeField] int projectileCount;
   
-
-    Camera playerCam;
     int remainingPenetrations;
     bool canFire = true;
     public override void Fire()
@@ -80,10 +78,6 @@ public class Shotgun : Weapon
                 SoundManager.Instance.PlaySoundOnObject(gameObject, "Pistol Reload", false);
             }
         }
-    }
-    private void Awake()
-    {
-        playerCam = Camera.main;
     }
     private void FinishFireCooldown()
     {

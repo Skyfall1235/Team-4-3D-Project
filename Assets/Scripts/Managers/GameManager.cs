@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] GameObject playerPrefab;
+    [SerializeField] float respawnTime = 2f;
+    [SerializeField] Vector3 spawnpoint;
     public static GameManager Instance { get; private set; }
     GameObject[] foundPlayers;
     public GameObject currentPlayer { get; private set; }
@@ -34,10 +37,20 @@ public class GameManager : MonoBehaviour
                 currentPlayer= foundPlayers[0];
             }
         }
+        //Get a reference to the player's position since it wont be the containing object 
         if(currentPlayer != null) 
         {
             playerCharacterTransform = currentPlayer.GetComponentInChildren<FirstPersonControllerV2>().gameObject.transform;
         }
         
+    }
+    public void OnPlayerDeath()
+    {
+        Invoke("RespawnPlayer", respawnTime);
+    }
+    void RespawnPlayer()
+    {
+        currentPlayer = Instantiate(playerPrefab, spawnpoint, Quaternion.identity);
+        playerCharacterTransform = currentPlayer.GetComponentInChildren<FirstPersonControllerV2>().gameObject.transform;
     }
 }

@@ -426,4 +426,9 @@ public class FirstPersonControllerV2 : Health
     {
         Debug.Log("Hit");
     }
+    public override void OnDeath()
+    {
+        GameManager.Instance.OnPlayerDeath();
+        Destroy(transform.root.gameObject);
+    }
 }
