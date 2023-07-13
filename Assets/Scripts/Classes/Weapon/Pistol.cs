@@ -29,7 +29,10 @@ public class Pistol : Weapon
             //add the raycast hit distances and the corrosponding raycast hit to the sorted dictionary so we can go through the elements and decrease our remaining penetrations after each hit
             foreach (RaycastHit hit in bulletHits)
             {
-                raycastHitDistances.Add(Vector3.Distance(playerCam.transform.position, hit.point), hit);
+                if(!raycastHitDistances.ContainsKey(Vector3.Distance(playerCam.transform.position, hit.point)))
+                {
+                    raycastHitDistances.Add(Vector3.Distance(playerCam.transform.position, hit.point), hit);
+                }
             }
             remainingPenetrations = weaponPenetrationPower;
             //Each time the bullet comes into contact with something, decrease its penetration amount and add required effects

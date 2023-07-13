@@ -48,7 +48,7 @@ public class TestEnemy : Health
                 animator.SetBool("Attack", false);
             }
         }
-        if (!IsDead)
+        if (!IsDead && GameManager.Instance.currentPlayer != null)
         {
             agent.SetDestination(GameManager.Instance.playerCharacterTransform.position);
         }
@@ -78,13 +78,16 @@ public class TestEnemy : Health
     //This has to be called by collision assistant because the child collision events aren't handled by OnCollisionEnter in this script
     public void CollisionDetected(Collision collision)
     {
-        List<GameObject> damagedGameObjects = new List<GameObject>();
-        foreach(ContactPoint contact in collision.contacts)
+        if (!IsDead)
         {
-            if (!damagedGameObjects.Contains(contact.otherCollider.transform.root.gameObject) && contact.otherCollider.transform.root.gameObject.GetComponentInChildren<IDamagable>() != null && DamagingColliders.Contains(contact.thisCollider))
+            List<GameObject> damagedGameObjects = new List<GameObject>();
+            foreach (ContactPoint contact in collision.contacts)
             {
-                contact.otherCollider.transform.root.gameObject.GetComponentInChildren<IDamagable>().Damage(attackDamage);
-                damagedGameObjects.Add(contact.otherCollider.transform.root.gameObject);
+                if (!damagedGameObjects.Contains(contact.otherCollider.transform.root.gameObject) && contact.otherCollider.transform.root.gameObject.GetComponentInChildren<IDamagable>() != null && DamagingColliders.Contains(contact.thisCollider))
+                {
+                    contact.otherCollider.transform.root.gameObject.GetComponentInChildren<IDamagable>().Damage(attackDamage);
+                    damagedGameObjects.Add(contact.otherCollider.transform.root.gameObject);
+                }
             }
         }
     }
