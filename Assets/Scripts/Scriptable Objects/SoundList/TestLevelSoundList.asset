@@ -23,3 +23,8 @@ MonoBehaviour:
     soundName: Pistol Reload
     volume: 1
     pitch: 1.02
+  - sound: {fileID: 8300000, guid: 46d345c0e3c7ddc49b81d950a143749c, type: 3}
+    isMusic: 0
+    soundName: Assault Rifle Fire
+    volume: 1
+    pitch: 1.02

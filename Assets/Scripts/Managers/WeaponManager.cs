@@ -6,10 +6,25 @@ public class WeaponManager : MonoBehaviour
 {
     public List<Weapon> weaponInventory;
     public Weapon currentWeapon;
+    int desiredWeaponIndex = 0;
+    bool scrollAxisInUse;
     // Start is called before the first frame update
     void Awake()
     {
         UpdateWeaponInventory();
+        currentWeapon = weaponInventory[desiredWeaponIndex];
+        foreach(Weapon weapon in weaponInventory)
+        {
+            if(weapon != currentWeapon)
+            {
+                weapon.gameObject.SetActive(false);
+            }
+            else
+            {
+                weapon.gameObject.SetActive(true);
+            }
+        }
+
     }
 
     // Update is called once per frame
@@ -29,21 +44,49 @@ public class WeaponManager : MonoBehaviour
                 currentWeapon.Fire();
             }
         }
-
         if (currentWeapon.canADS)
         {
-            if (Input.GetButtonDown("Fire2"))
-            {
-                currentWeapon.ChangeADS(true);
-            }
-            if (Input.GetButtonUp("Fire2"))
-            {
-                currentWeapon.ChangeADS(false);
-            }
+            currentWeapon.ChangeADS(Input.GetButton("Fire2"));
         }
         if (Input.GetButtonDown("Reload"))
         {
             currentWeapon.Reload();
+        }
+        if(Input.GetAxisRaw("Mouse ScrollWheel") != 0)
+        {
+            if (!scrollAxisInUse)
+            {
+                if(Input.GetAxisRaw("Mouse ScrollWheel") > 0) 
+                {
+                    desiredWeaponIndex++;
+                }
+                else
+                {
+                    desiredWeaponIndex--;
+                }
+                if(desiredWeaponIndex > weaponInventory.Count - 1)
+                {
+                    desiredWeaponIndex = 0;
+                }
+                if(desiredWeaponIndex < 0)
+                {
+                    desiredWeaponIndex = weaponInventory.Count - 1;
+                }
+
+
+                scrollAxisInUse = true;
+            }
+        }
+        else
+        {
+            scrollAxisInUse= false;
+        }
+        if(desiredWeaponIndex != weaponInventory.IndexOf(currentWeapon))
+        {
+            currentWeapon.gameObject.SetActive(false);
+            currentWeapon.gameObject.transform.localPosition = currentWeapon.hipFireWeaponPosition;
+            currentWeapon = weaponInventory[desiredWeaponIndex];
+            currentWeapon.gameObject.SetActive(true);
         }
     }
     void UpdateWeaponInventory()

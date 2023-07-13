@@ -35,8 +35,8 @@ public abstract class Weapon : MonoBehaviour
 
     [Header("ADS Options")]
     public float adsTransitionTime;
-    [SerializeField] protected Vector3 hipFireWeaponPosition;
-    [SerializeField] protected Vector3 adsWeaponPosition;
+    [SerializeField] public Vector3 hipFireWeaponPosition;
+    [SerializeField] public Vector3 adsWeaponPosition;
     private IEnumerator currentADSCoroutine;
 
     [Header("Accuracy Options")]
