@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
@@ -16,6 +17,14 @@ public class MainMenu : MonoBehaviour
     public GameObject helpButton;
     [SerializeField]
     public GameObject quitButton;
+    [SerializeField]
+    public CanvasGroup controllerCanvasGroup;
+    [SerializeField]
+    public Button ExitfromControllerbutton;
+    [SerializeField]
+    public CanvasGroup volumeCanvasGroup;
+
+
 
     //fading
     [SerializeField]
@@ -35,6 +44,25 @@ public class MainMenu : MonoBehaviour
     {
         myUIGroup.alpha = 0;
         fadeOut = true;
+    }
+
+
+    private void Start()
+    {
+        controllerCanvasGroup.alpha = 0;
+        volumeCanvasGroup.alpha = 0;
+    }
+
+    public void ControllerButtonPress()
+    {
+        controllerCanvasGroup.alpha = 0;
+        Debug.Log("button pressed");
+    }
+
+    public void VolumeButtonPress()
+    {
+        volumeCanvasGroup.alpha = 0;
+        Debug.Log("button pressed");
     }
 
     private void Update()
@@ -72,13 +100,13 @@ public class MainMenu : MonoBehaviour
 
     public void SettingsB()
     {
-        SceneManager.LoadScene("1");
+        controllerCanvasGroup.alpha = 1;
 
     }
 
     public void HelpB()
     {
-        SceneManager.LoadScene("1");
+        volumeCanvasGroup.alpha = 1;
 
     }
 
