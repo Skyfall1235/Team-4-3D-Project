@@ -9,7 +9,7 @@ public class InteractionHandler : MonoBehaviour
     [SerializeField] private List<GameObject> interactableObjectsInRange= new List<GameObject>();
     private void OnTriggerEnter(Collider other)
     {
-        if (!interactableObjectsInRange.Contains(other.gameObject) && other.gameObject.GetComponent<IInteractible>() != null)
+        if (!interactableObjectsInRange.Contains(other.gameObject) && other.gameObject.GetComponent<IInteractable>() != null)
         {
             interactableObjectsInRange.Add(other.gameObject);
             if(other.gameObject.GetComponent<Outline>() != null)
@@ -42,7 +42,7 @@ public class InteractionHandler : MonoBehaviour
         {
             foreach(GameObject obj in interactableObjectsInRange)
             {
-                obj.GetComponent<IInteractible>().Interact();
+                obj.GetComponent<IInteractable>().Interact();
             }
         }
     }
