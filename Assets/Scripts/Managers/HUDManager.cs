@@ -12,10 +12,6 @@ public class HUDManager : MonoBehaviour
     TMP_Text PlayerAmmoInClipAndClipSize; //ammo in clip + clip size
     TMP_Text PlayerReserveAmmo;
 
-    //slider
-    [SerializeField]
-    private Slider HealthSlider;
-
 
     void Start()
     {
@@ -28,11 +24,7 @@ public class HUDManager : MonoBehaviour
         
         if(GameManager.Instance != null && GameManager.Instance.currentPlayer != null && GameManager.Instance.currentPlayer.GetComponentInChildren<Health>() != null)
         {
-
-            HealthSlider.value = GameManager.Instance.currentPlayer.GetComponentInChildren<Health>().CurrentHealth;
-            Debug.Log(HealthSlider.value);
             PlayerHealthText.text = GameManager.Instance.currentPlayer.GetComponentInChildren<Health>().CurrentHealth.ToString();
-
         }
     }
 }

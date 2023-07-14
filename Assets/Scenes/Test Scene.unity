@@ -9940,8 +9940,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8ff660e09e747345893a33aa444ba36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerHealthText: {fileID: 0}
-  HealthSlider: {fileID: 0}
+  PlayerHealthText: {fileID: 669400553}
 --- !u!43 &1918421119
 Mesh:
   m_ObjectHideFlags: 0
