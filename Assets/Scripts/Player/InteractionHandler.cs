@@ -1,14 +1,34 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Device;
 
 [RequireComponent(typeof(Camera))]
 public class InteractionHandler : MonoBehaviour
 {
-
-    [SerializeField] float interactionRadius = 5f;
     Camera cam;
+
+    [SerializeField] private List<GameObject> interactableObjectsInRange= new List<GameObject>();
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!interactableObjectsInRange.Contains(other.gameObject) && other.gameObject.GetComponent<IInteractible>() != null)
+        {
+            interactableObjectsInRange.Add(other.gameObject);
+            if(other.gameObject.GetComponent<Outline>() != null)
+            {
+                other.gameObject.GetComponent<Outline>().enabled = true;
+            }
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (interactableObjectsInRange.Contains(other.gameObject))
+        {
+            interactableObjectsInRange.Remove(other.gameObject);
+            if (other.gameObject.GetComponent<Outline>() != null)
+            {
+                other.gameObject.GetComponent<Outline>().enabled = false;
+            }
+        }
+    }
     private void Start()
     {
         if(GetComponent<Camera>() != null)
@@ -20,17 +40,9 @@ public class InteractionHandler : MonoBehaviour
     {
         if (Input.GetButtonDown("Interact"))
         {
-            List<GameObject> InteractiblesToActivate = new List<GameObject>();
-            foreach (Collider coll in Physics.OverlapSphere(transform.position, interactionRadius))
+            foreach(GameObject obj in interactableObjectsInRange)
             {
-                if (coll.gameObject.GetComponentInChildren<IInteractible>() != null && IsVisibleOnScreen(coll.gameObject))
-                {
-                    InteractiblesToActivate.Add(coll.gameObject);
-                }
-            }
-            foreach(GameObject obj in InteractiblesToActivate)
-            {
-                obj.GetComponentInChildren<IInteractible>().Interact();
+                obj.GetComponent<IInteractible>().Interact();
             }
         }
     }

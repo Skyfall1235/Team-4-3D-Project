@@ -8,7 +8,7 @@ public class IntroScript : MonoBehaviour
 {
     public string levelToLoad;
     private float timer = 10f;
-    private Text timerSeconds;
+   // private Text timerSeconds;
 
 
 }
