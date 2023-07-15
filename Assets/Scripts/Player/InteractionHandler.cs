@@ -9,12 +9,12 @@ public class InteractionHandler : MonoBehaviour
     [SerializeField] private List<GameObject> interactableObjectsInRange= new List<GameObject>();
     private void OnTriggerEnter(Collider other)
     {
-        if (!interactableObjectsInRange.Contains(other.gameObject) && other.gameObject.GetComponent<IInteractable>() != null)
+        if (!interactableObjectsInRange.Contains(other.gameObject) && other.gameObject.GetComponentInParent<IInteractable>() != null)
         {
             interactableObjectsInRange.Add(other.gameObject);
-            if(other.gameObject.GetComponent<Outline>() != null)
+            if(other.gameObject.GetComponentInParent<Outline>() != null)
             {
-                other.gameObject.GetComponent<Outline>().enabled = true;
+                other.gameObject.GetComponentInParent<Outline>().enabled = true;
             }
         }
     }
@@ -23,9 +23,9 @@ public class InteractionHandler : MonoBehaviour
         if (interactableObjectsInRange.Contains(other.gameObject))
         {
             interactableObjectsInRange.Remove(other.gameObject);
-            if (other.gameObject.GetComponent<Outline>() != null)
+            if (other.gameObject.GetComponentInParent<Outline>() != null)
             {
-                other.gameObject.GetComponent<Outline>().enabled = false;
+                other.gameObject.GetComponentInParent<Outline>().enabled = false;
             }
         }
     }
@@ -42,14 +42,14 @@ public class InteractionHandler : MonoBehaviour
         {
             foreach(GameObject obj in interactableObjectsInRange)
             {
-                obj.GetComponent<IInteractable>().Interact();
+                obj.GetComponentInParent<IInteractable>().Interact();
             }
         }
     }
     private bool IsVisibleOnScreen(GameObject objectToCheck)
     {
         Vector3 screenPos = cam.WorldToScreenPoint(objectToCheck.transform.position);
-        bool onScreen = screenPos.x > 0f && screenPos.x < UnityEngine.Screen.width && screenPos.y > 0f && screenPos.y < UnityEngine.Screen.height;
+        bool onScreen = screenPos.x > 0f && screenPos.x < Screen.width && screenPos.y > 0f && screenPos.y < Screen.height;
         if (onScreen && objectToCheck.GetComponent<Renderer>() != null && objectToCheck.GetComponent<Renderer>().isVisible)
         {
             return true;
