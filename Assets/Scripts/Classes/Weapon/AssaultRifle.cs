@@ -14,7 +14,7 @@ public class AssaultRifle : Weapon
             //play fire sound
             if (SoundManager.Instance != null)
             {
-                SoundManager.Instance.PlaySoundOnObject(gameObject, "Pistol Shot", false);
+                SoundManager.Instance.PlaySoundOnObject(gameObject, "AR Shot", false);
             }
             //calculate deviation of shot
             Vector3 hipFireShotDeviation = (playerCam.transform.up * Random.Range(-maxHipFireWeaponInaccuracy.x, maxHipFireWeaponInaccuracy.x)) + (playerCam.transform.right * Random.Range(-maxHipFireWeaponInaccuracy.y, maxHipFireWeaponInaccuracy.y));
@@ -60,7 +60,7 @@ public class AssaultRifle : Weapon
             base.Reload();
             if (SoundManager.Instance != null)
             {
-                SoundManager.Instance.PlaySoundOnObject(gameObject, "Pistol Reload", false);
+                SoundManager.Instance.PlaySoundOnObject(gameObject, "AR Reload", false);
             }
         }
     }

@@ -13,18 +13,38 @@ MonoBehaviour:
   m_Name: TestLevelSoundList
   m_EditorClassIdentifier: 
   soundList:
-  - sound: {fileID: 8300000, guid: f624550e366fb7147b9a0f822cbbadf5, type: 3}
-    isMusic: 0
-    soundName: Pistol Shot
-    volume: 1
-    pitch: 1.02
   - sound: {fileID: 8300000, guid: 2b29db7abaf96674aafa86dcccb66868, type: 3}
     isMusic: 0
     soundName: Pistol Reload
     volume: 1
     pitch: 1.02
-  - sound: {fileID: 8300000, guid: 46d345c0e3c7ddc49b81d950a143749c, type: 3}
+  - sound: {fileID: 8300000, guid: f624550e366fb7147b9a0f822cbbadf5, type: 3}
     isMusic: 0
-    soundName: Assault Rifle Fire
+    soundName: Pistol Shot
+    volume: 1
+    pitch: 1.02
+  - sound: {fileID: 8300000, guid: 0e09bf4dc7b955e4e9bc7291a1ad0837, type: 3}
+    isMusic: 0
+    soundName: Sparking Wires
+    volume: 0.113
+    pitch: 1.02
+  - sound: {fileID: 8300000, guid: 0f02fa00b76f93a41ba1443115965d08, type: 3}
+    isMusic: 0
+    soundName: AR Shot
+    volume: 1
+    pitch: 1.02
+  - sound: {fileID: 8300000, guid: 47893447a75ad924ba8096a4c563196b, type: 3}
+    isMusic: 0
+    soundName: AR Reload
+    volume: 1
+    pitch: 1.02
+  - sound: {fileID: 8300000, guid: 3d5746e851bb290498931e8ec61307b0, type: 3}
+    isMusic: 0
+    soundName: Shotgun Shot
+    volume: 1
+    pitch: 1.02
+  - sound: {fileID: 8300000, guid: 281652c4ba2b4bc409bd747dbe8b6668, type: 3}
+    isMusic: 0
+    soundName: Shotgun Reload
     volume: 1
     pitch: 1.02

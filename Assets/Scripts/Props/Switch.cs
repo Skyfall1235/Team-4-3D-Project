@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Switch : MonoBehaviour, IInteractable, IResetable
 {
-    [SerializeField] GameObject objectToSwitch;
+    [SerializeField] List<GameObject> objectsToSwitch;
     [SerializeField] bool defaultSwitchState;
     bool isOn;
     public void Start()
@@ -26,11 +26,24 @@ public class Switch : MonoBehaviour, IInteractable, IResetable
     {
         if (isOn)
         {
-            objectToSwitch.GetComponent<ISwitchable>().SwitchedOn();
+            foreach(GameObject go in objectsToSwitch)
+            {
+                if(go.GetComponent<ISwitchable>() != null)
+                {
+                    go.GetComponent<ISwitchable>().SwitchedOn();
+                }
+            }
+            
         }
         else
         {
-            objectToSwitch.GetComponent<ISwitchable>().SwitchedOff();
+            foreach (GameObject go in objectsToSwitch)
+            {
+                if (go.GetComponent<ISwitchable>() != null)
+                {
+                    go.GetComponent<ISwitchable>().SwitchedOff();
+                }
+            }
         }
     }
 }

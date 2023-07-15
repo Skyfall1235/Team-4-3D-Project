@@ -19,7 +19,7 @@ public class Shotgun : Weapon
             //play fire sound
             if (SoundManager.Instance != null)
             {
-                SoundManager.Instance.PlaySoundOnObject(gameObject, "Pistol Shot", false);
+                SoundManager.Instance.PlaySoundOnObject(gameObject, "Shotgun Shot", false);
             }
             //create a dictionary of dictionaries  
             Dictionary<int, SortedDictionary<float, RaycastHit>> projectileRaycastHits = new Dictionary<int, SortedDictionary<float, RaycastHit>>();
@@ -75,7 +75,7 @@ public class Shotgun : Weapon
             base.Reload();
             if (SoundManager.Instance != null)
             {
-                SoundManager.Instance.PlaySoundOnObject(gameObject, "Pistol Reload", false);
+                SoundManager.Instance.PlaySoundOnObject(gameObject, "Shotgun Reload", false);
             }
         }
     }
