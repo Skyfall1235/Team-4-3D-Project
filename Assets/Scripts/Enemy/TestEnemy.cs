@@ -27,6 +27,7 @@ public class TestEnemy : Health, IResetable
     Collider[] colliders;
     bool hasRagdolled = false;
     bool hasBeenRemovedFromScene = false;
+    public bool isAgroOnPlayer = false;
 
     void Awake()
     {
@@ -69,12 +70,12 @@ public class TestEnemy : Health, IResetable
                 animator.SetBool("Attack", false);
             }
         }
-        if (!IsDead && GameManager.Instance.currentPlayer != null)
+        if (!IsDead && GameManager.Instance.currentPlayer != null && isAgroOnPlayer)
         {
             agent.isStopped = false;
             agent.SetDestination(GameManager.Instance.playerCharacterTransform.position);
         }
-        else
+        if(IsDead || GameManager.Instance.currentPlayer == null || !isAgroOnPlayer)
         {
             agent.isStopped = true;
         }
@@ -114,7 +115,7 @@ public class TestEnemy : Health, IResetable
     //This has to be called by collision assistant because the child collision events aren't handled by OnCollisionEnter in this script
     public void CollisionDetected(Collision collision)
     {
-        if (!IsDead)
+        if (!IsDead && isAgroOnPlayer && animator.GetBool("Attack"))
         {
             List<GameObject> damagedGameObjects = new List<GameObject>();
             foreach (ContactPoint contact in collision.contacts)
