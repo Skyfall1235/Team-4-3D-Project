@@ -45,6 +45,10 @@ public class ExplodingBarrel : MonoBehaviour, IDamagable, IResetable
     {
         if(!hasExploded)
         {
+            if(SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlaySoundOnObject(gameObject, "Explosion", false);
+            }
             if (ps != null)
             {
                 foreach(ParticleSystem ps in ps)

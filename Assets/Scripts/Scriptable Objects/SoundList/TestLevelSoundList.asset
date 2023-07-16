@@ -58,3 +58,8 @@ MonoBehaviour:
     soundName: Rifle Reload
     volume: 1
     pitch: 1.02
+  - sound: {fileID: 8300000, guid: b65b0fefbf5ae8f478662a26880d6e33, type: 3}
+    isMusic: 0
+    soundName: Explosion
+    volume: 1
+    pitch: 1.02
