@@ -23,7 +23,7 @@ public abstract class Weapon : MonoBehaviour
     [HideInInspector] public int currentAmmo;
     public int baseClipSize;
     [HideInInspector] public int currentClipSize;
-    protected int currentClip;
+    public int currentClip { get; protected set; }
     public float baseReloadTime;
     [HideInInspector] public float currentReloadTime;
 
