@@ -46,18 +46,22 @@ public class Shotgun : Weapon
             //For every shot we fired, loop through the hits and decrease our penetration value for everything we come into contact with
             foreach(KeyValuePair<int, SortedDictionary<float, RaycastHit>> projectileDictionary in projectileRaycastHits)
             {
+                List<GameObject> gameObjectsHit = new List<GameObject>();
                 remainingPenetrations = weaponPenetrationPower;
                 for (int i = 0; i < projectileDictionary.Value.Count && remainingPenetrations > 0; i++)
                 {
-                    if (projectileDictionary.Value.ElementAt(i).Value.collider.gameObject.transform.root.GetComponentInChildren<IDamagable>() != null)
+                    if (!gameObjectsHit.Contains(projectileDictionary.Value.ElementAt(i).Value.collider.transform.root.gameObject))
                     {
-                        projectileDictionary.Value.ElementAt(i).Value.collider.gameObject.transform.root.GetComponentInChildren<IDamagable>().Damage(weaponDamage);
+                        if (projectileDictionary.Value.ElementAt(i).Value.collider.gameObject.transform.root.GetComponentInChildren<IDamagable>() != null)
+                        {
+                            projectileDictionary.Value.ElementAt(i).Value.collider.gameObject.transform.root.GetComponentInChildren<IDamagable>().Damage(weaponDamage);
+                        }
+                        if (projectileDictionary.Value.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>() != null && !projectileDictionary.Value.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>().isKinematic)
+                        {
+                            projectileDictionary.Value.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>().AddForce(playerCam.transform.forward * 2, ForceMode.Impulse);
+                        }
+                        remainingPenetrations--;
                     }
-                    if (projectileDictionary.Value.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>() != null && !projectileDictionary.Value.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>().isKinematic)
-                    {
-                        projectileDictionary.Value.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>().AddForce(playerCam.transform.forward * 2, ForceMode.Impulse);
-                    }
-                    remainingPenetrations--;
                 }
             }
             //Deal with fire cooldown

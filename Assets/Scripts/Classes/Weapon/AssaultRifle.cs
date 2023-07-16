@@ -33,17 +33,21 @@ public class AssaultRifle : Weapon
             }
             remainingPenetrations = weaponPenetrationPower;
             //Each time the bullet comes into contact with something, decrease its penetration amount and add required effects
+            List<GameObject> gameObjectsHit = new List<GameObject>();
             for (int i = 0; i < raycastHitDistances.Count && remainingPenetrations > 0; i++)
             {
-                if (raycastHitDistances.ElementAt(i).Value.collider.gameObject.transform.root.GetComponentInChildren<IDamagable>() != null)
+                if (!gameObjectsHit.Contains(raycastHitDistances.ElementAt(i).Value.collider.transform.root.gameObject))
                 {
-                    raycastHitDistances.ElementAt(i).Value.collider.gameObject.transform.root.GetComponentInChildren<IDamagable>().Damage(weaponDamage);
+                    if (raycastHitDistances.ElementAt(i).Value.collider.gameObject.transform.root.GetComponentInChildren<IDamagable>() != null)
+                    {
+                        raycastHitDistances.ElementAt(i).Value.collider.gameObject.transform.root.GetComponentInChildren<IDamagable>().Damage(weaponDamage);
+                    }
+                    if (raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>() != null && !raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>().isKinematic)
+                    {
+                        raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>().AddForce(playerCam.transform.forward * 2, ForceMode.Impulse);
+                    }
+                    remainingPenetrations--;
                 }
-                if (raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>() != null && !raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>().isKinematic)
-                {
-                    raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>().AddForce(playerCam.transform.forward * 2, ForceMode.Impulse);
-                }
-                remainingPenetrations--;
             }
             //Deal with fire cooldown
             canFire = false;

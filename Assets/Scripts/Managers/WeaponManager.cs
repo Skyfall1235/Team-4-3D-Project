@@ -81,7 +81,7 @@ public class WeaponManager : MonoBehaviour
         {
             scrollAxisInUse= false;
         }
-        if(desiredWeaponIndex != weaponInventory.IndexOf(currentWeapon))
+        if(desiredWeaponIndex != weaponInventory.IndexOf(currentWeapon) && !currentWeapon.isReloading)
         {
             currentWeapon.gameObject.SetActive(false);
             currentWeapon.gameObject.transform.localPosition = currentWeapon.hipFireWeaponPosition;
