@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6153d12a89ba39946b8ea6281e5f47dd
+guid: 21a68b501df9a414b9ab4ec617b97ad6
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,8 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: pCylinder1Mat
-    second: {fileID: 2100000, guid: 3b844300790f05e4f96e057063320fb0, type: 2}
+      name: lambert1
+    second: {fileID: 2100000, guid: e94c2b4c88ee5844cb15ef14fe9d5e45, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: shatterInteriorS3
+    second: {fileID: 2100000, guid: d46d77d91971e37438ee464e32ac0df0, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -40,7 +45,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 0.04
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -95,7 +100,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.04
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
