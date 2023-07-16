@@ -48,3 +48,13 @@ MonoBehaviour:
     soundName: Shotgun Reload
     volume: 1
     pitch: 1.02
+  - sound: {fileID: 8300000, guid: 3e4e57eca6ad99641a530bb20ae2ed10, type: 3}
+    isMusic: 0
+    soundName: Rifle Shot
+    volume: 1
+    pitch: 1.02
+  - sound: {fileID: 8300000, guid: 357259524e2a1844aa951c3f8748885b, type: 3}
+    isMusic: 0
+    soundName: Rifle Reload
+    volume: 1
+    pitch: 1.02
