@@ -11,6 +11,11 @@ public class Pistol : Weapon
         //If we are not reloading and our clip has bullets in it
         if (!isReloading && currentClip > 0 && canFire && playerCam != null)
         {
+            ParticleSystem[] muzzleFlashes = GetComponentsInChildren<ParticleSystem>();
+            foreach (ParticleSystem ps in muzzleFlashes)
+            {
+                ps.Play();
+            }
             //play fire sound
             if (SoundManager.Instance != null)
             {
