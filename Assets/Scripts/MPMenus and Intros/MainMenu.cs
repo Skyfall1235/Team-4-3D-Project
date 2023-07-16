@@ -23,6 +23,8 @@ public class MainMenu : MonoBehaviour
     public Button ExitfromControllerbutton;
     [SerializeField]
     public CanvasGroup volumeCanvasGroup;
+    [SerializeField]
+    public GameObject MainMenuButton;
 
 
 
@@ -96,6 +98,10 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadScene("Test Scene");
 
+    }
+    public void MainMenuB()
+    {
+        SceneManager.LoadScene("Main Menu");
     }
 
     public void SettingsB()

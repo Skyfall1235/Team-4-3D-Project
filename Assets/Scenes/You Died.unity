@@ -222,7 +222,7 @@ RectTransform:
   - {fileID: 1793826829}
   - {fileID: 1658184158}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -238,10 +238,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 332209242}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71a878dfd7beb444fba7e20cea3feff1, type: 3}
+  m_Script: {fileID: 11500000, guid: 5ff4ff741dd5b6345bf24f3fa33ca291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelToLoad: 
+  playButton: {fileID: 1793826828}
+  MenuButton: {fileID: 1658184157}
 --- !u!1 &724404522
 GameObject:
   m_ObjectHideFlags: 0
@@ -402,7 +403,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1198447067
 GameObject:
@@ -655,9 +656,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: PlayGameB
+      - m_Target: {fileID: 332209247}
+        m_TargetAssemblyTypeName: YouDied, Assembly-CSharp
+        m_MethodName: MainMenuB
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -788,8 +789,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+      - m_Target: {fileID: 332209247}
+        m_TargetAssemblyTypeName: YouDied, Assembly-CSharp
         m_MethodName: PlayGameB
         m_Mode: 1
         m_Arguments:

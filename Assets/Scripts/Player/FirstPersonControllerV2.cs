@@ -1,4 +1,6 @@
 using UnityEngine;
+//added MP
+using UnityEngine.SceneManagement;
 
 public class FirstPersonControllerV2 : Health
 {
@@ -425,10 +427,13 @@ public class FirstPersonControllerV2 : Health
     public override void OnDamaged()
     {
         Debug.Log("Hit");
+
     }
     public override void OnDeath()
     {
-        GameManager.Instance.OnPlayerDeath();
-        Destroy(transform.root.gameObject);
+        SceneManager.LoadScene("You Died");
+        //commenting this out to see if you died scene works - MP
+        //GameManager.Instance.OnPlayerDeath();
+        //Destroy(transform.root.gameObject);
     }
 }
