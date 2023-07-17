@@ -16,5 +16,5 @@ MonoBehaviour:
   - sound: {fileID: 8300000, guid: 55a50d876bf18674f87b458e49221e61, type: 3}
     isMusic: 1
     soundName: MenuMusic
-    volume: 0.02
-    pitch: 0.87
+    volume: 0.08
+    pitch: 1
