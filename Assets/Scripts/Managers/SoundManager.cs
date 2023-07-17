@@ -60,6 +60,7 @@ public class SoundManager : MonoBehaviour
                 AudioSource source = newSoundGO.AddComponent<AudioSource>();
                 newSoundGO.AddComponent<SoundUpdater>();
                 playingSounds.Add(newSoundGO, soundToPlay);
+                source.volume = soundToPlay.isMusic ? Remap(soundToPlay.volume, 0f, 1f, 0f, musicVolume) : Remap(soundToPlay.volume, 0f, 1f, 0f, soundVolume);
                 source.pitch = soundToPlay.pitch;
                 source.loop = loop;
                 source.clip = soundToPlay.sound;
@@ -103,6 +104,7 @@ public class SoundManager : MonoBehaviour
                 newSoundGO.AddComponent<SoundUpdater>();
                 newSoundGO.GetComponent<SoundUpdater>().objectForSound =  obj;
                 playingSounds.Add(newSoundGO, soundToPlay);
+                source.volume = soundToPlay.isMusic ? Remap(soundToPlay.volume, 0f, 1f, 0f, musicVolume) : Remap(soundToPlay.volume, 0f, 1f, 0f, soundVolume);
                 source.pitch = soundToPlay.pitch;
                 source.loop = loop;
                 source.clip = soundToPlay.sound;
