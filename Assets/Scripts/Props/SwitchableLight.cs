@@ -7,20 +7,29 @@ public class SwitchableLight : MonoBehaviour, ISwitchable
     Light[] lightsToSwitch;
     void Start()
     {
-        lightsToSwitch = GetComponentsInChildren<Light>();
+        if(GetComponentsInChildren<Light>() != null)
+        {
+            lightsToSwitch = GetComponentsInChildren<Light>();
+        }
     }
     public void SwitchedOn()
     {
-        foreach (Light light in lightsToSwitch)
+        if(lightsToSwitch != null)
         {
-            light.enabled = true;
+            foreach (Light light in lightsToSwitch)
+            {
+                light.enabled = true;
+            }
         }
     }
     public void SwitchedOff() 
     {
-        foreach (Light light in lightsToSwitch)
+        if(lightsToSwitch != null)
         {
-            light.enabled = false;
+            foreach (Light light in lightsToSwitch)
+            {
+                light.enabled = false;
+            }
         }
     }
 }
