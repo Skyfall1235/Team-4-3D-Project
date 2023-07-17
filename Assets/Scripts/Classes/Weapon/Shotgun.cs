@@ -65,6 +65,7 @@ public class Shotgun : Weapon
                         {
                             projectileDictionary.Value.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>().AddForce(playerCam.transform.forward * 2, ForceMode.Impulse);
                         }
+                        gameObjectsHit.Add(projectileDictionary.Value.ElementAt(i).Value.collider.transform.root.gameObject);
                         remainingPenetrations--;
                     }
                 }

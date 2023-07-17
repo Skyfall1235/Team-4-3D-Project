@@ -51,6 +51,7 @@ public class AssaultRifle : Weapon
                     {
                         raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>().AddForce(playerCam.transform.forward * 2, ForceMode.Impulse);
                     }
+                    gameObjectsHit.Add(raycastHitDistances.ElementAt(i).Value.collider.transform.root.gameObject);
                     remainingPenetrations--;
                 }
             }
