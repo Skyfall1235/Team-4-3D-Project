@@ -63,3 +63,38 @@ MonoBehaviour:
     soundName: Explosion
     volume: 1
     pitch: 1.02
+  - sound: {fileID: 8300000, guid: df023ecf9d266b049b46d39e916f7982, type: 3}
+    isMusic: 0
+    soundName: AmbientLaugh
+    volume: 1
+    pitch: 1.02
+  - sound: {fileID: 8300000, guid: c9cf3bc7a4978f04f8ada36317d7b90f, type: 3}
+    isMusic: 0
+    soundName: ElevatorDing
+    volume: 1
+    pitch: 1.02
+  - sound: {fileID: 8300000, guid: bef99126d50e60b469db322c8639ee33, type: 3}
+    isMusic: 0
+    soundName: Footstep
+    volume: 1
+    pitch: 1.02
+  - sound: {fileID: 8300000, guid: 23dadfbab2d1b3c4586b3d6d4f547fe7, type: 3}
+    isMusic: 0
+    soundName: Insane1
+    volume: 1
+    pitch: 1.02
+  - sound: {fileID: 8300000, guid: 29e38b582ecc67645bc758ab49c98a58, type: 3}
+    isMusic: 0
+    soundName: Insane2
+    volume: 1
+    pitch: 1.02
+  - sound: {fileID: 8300000, guid: aa9b5da598b9d47489394f340d023b96, type: 3}
+    isMusic: 0
+    soundName: RainAmbient
+    volume: 1
+    pitch: 1.02
+  - sound: {fileID: 8300000, guid: da746e0c360e69b40a63e46a2dcb7013, type: 3}
+    isMusic: 0
+    soundName: Switchnoise
+    volume: 1
+    pitch: 1.02

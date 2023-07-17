@@ -15,6 +15,10 @@ public class Switch : MonoBehaviour, IInteractable, IResetable
     public void Interact()
     {
         isOn = !isOn;
+        if ( SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlaySoundOnObject(gameObject, "Switchnoise", false);
+        }
         UpdateSwitchableState();
     }
     public void ResetObject()

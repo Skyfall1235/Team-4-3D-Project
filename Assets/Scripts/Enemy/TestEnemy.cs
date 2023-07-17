@@ -28,6 +28,7 @@ public class TestEnemy : Health, IResetable
     bool hasRagdolled = false;
     bool hasBeenRemovedFromScene = false;
     public bool isAgroOnPlayer = false;
+    private bool agroSoundHasPlayed = false;
 
     void Awake()
     {
@@ -57,6 +58,30 @@ public class TestEnemy : Health, IResetable
     }
     private void Update()
     {
+        if (!agroSoundHasPlayed && isAgroOnPlayer)
+        {
+            
+          if (SoundManager.Instance != null)
+            {
+                int soundIndex = Random.Range(0, 2);
+                if (soundIndex == 0)
+                {
+                    SoundManager.Instance.PlaySoundOnObject(gameObject, "Insane1", false);
+                }
+                else
+                {
+                    SoundManager.Instance.PlaySoundOnObject(gameObject, "Insane2", false);
+                }
+                agroSoundHasPlayed = true;
+                
+            }
+        }
+
+        if (!isAgroOnPlayer)
+        {
+            agroSoundHasPlayed = false;
+        }
+
         if (animator != null)
         {
             animator.SetFloat("Move Speed", new Vector3(agent.velocity.x, 0, agent.velocity.z).magnitude);

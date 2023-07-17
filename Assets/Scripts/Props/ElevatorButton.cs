@@ -10,6 +10,10 @@ public class ElevatorButton : MonoBehaviour, ISwitchable, IInteractable
         if(isEnabled)
         {
             Debug.Log("Going Up!");
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlaySoundOnObject(gameObject, "ElevatorDing", false);
+            }
         }
     }
     public void SwitchedOn()

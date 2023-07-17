@@ -53,6 +53,13 @@ public class MainMenu : MonoBehaviour
     {
         controllerCanvasGroup.alpha = 0;
         volumeCanvasGroup.alpha = 0;
+
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlaySoundOnObject(Camera.main.gameObject, "MenuMusic", true);
+        }
+
+
     }
 
     public void ControllerButtonPress()
