@@ -626,7 +626,7 @@ Transform:
   - {fileID: 5268083595389174458}
   - {fileID: 2382492222668279989}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 182.63, z: 0}
 --- !u!1001 &3958589139434084206
 PrefabInstance:
@@ -680,6 +680,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 168718693941104940, guid: aa779b69b09a7c44f964a47d69f43062, type: 3}
+      propertyPath: baseMaxAmmo
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 168718693941104940, guid: aa779b69b09a7c44f964a47d69f43062, type: 3}
+      propertyPath: baseClipSize
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 168718693941104940, guid: aa779b69b09a7c44f964a47d69f43062, type: 3}
+      propertyPath: weaponDamage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 168718693941104940, guid: aa779b69b09a7c44f964a47d69f43062, type: 3}
+      propertyPath: projectileCount
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 3978161068465433435, guid: aa779b69b09a7c44f964a47d69f43062, type: 3}
       propertyPath: m_Name
       value: FinallyAshotgunColinLikes
@@ -713,6 +729,30 @@ PrefabInstance:
     - target: {fileID: 2128621990819612611, guid: e11576c68ba60164a9d04e93e4f7589d, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2961145994907565830, guid: e11576c68ba60164a9d04e93e4f7589d, type: 3}
+      propertyPath: baseClipSize
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2961145994907565830, guid: e11576c68ba60164a9d04e93e4f7589d, type: 3}
+      propertyPath: weaponDamage
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2961145994907565830, guid: e11576c68ba60164a9d04e93e4f7589d, type: 3}
+      propertyPath: recoilSnappiness
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2961145994907565830, guid: e11576c68ba60164a9d04e93e4f7589d, type: 3}
+      propertyPath: maxADSRecoilAmounts.x
+      value: -2.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2961145994907565830, guid: e11576c68ba60164a9d04e93e4f7589d, type: 3}
+      propertyPath: maxHipFireRecoilAmounts.x
+      value: -4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2961145994907565830, guid: e11576c68ba60164a9d04e93e4f7589d, type: 3}
+      propertyPath: maxHipFireRecoilAmounts.y
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6065957745192242061, guid: e11576c68ba60164a9d04e93e4f7589d, type: 3}
       propertyPath: m_RootOrder
@@ -820,6 +860,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7296583321345969288, guid: a60e1a216d264de4d87ce7e3fe2ba2d2, type: 3}
+      propertyPath: baseMaxAmmo
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 7834056148570027086, guid: a60e1a216d264de4d87ce7e3fe2ba2d2, type: 3}
       propertyPath: m_Name
       value: Semi
@@ -842,6 +886,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 407044807543386589}
     m_Modifications:
+    - target: {fileID: 2785665557910460135, guid: 71ebf3f6c9d3e114494460962d0f05f5, type: 3}
+      propertyPath: baseMaxAmmo
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785665557910460135, guid: 71ebf3f6c9d3e114494460962d0f05f5, type: 3}
+      propertyPath: baseClipSize
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785665557910460135, guid: 71ebf3f6c9d3e114494460962d0f05f5, type: 3}
+      propertyPath: weaponDamage
+      value: 19
+      objectReference: {fileID: 0}
     - target: {fileID: 3941378665869771657, guid: 71ebf3f6c9d3e114494460962d0f05f5, type: 3}
       propertyPath: m_Name
       value: GlockOBJ
