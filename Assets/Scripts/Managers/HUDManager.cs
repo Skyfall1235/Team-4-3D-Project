@@ -7,6 +7,8 @@ using Unity.VisualScripting;
 
 public class HUDManager : MonoBehaviour
 {
+    public static HUDManager Instance { get; private set; }
+
     //Health TextMeshPro 
     [SerializeField]
     TMP_Text PlayerAmmoInClipAndClipSize; //ammo in clip + clip size
@@ -14,16 +16,28 @@ public class HUDManager : MonoBehaviour
     TMP_Text PlayerReserveAmmo;
     [SerializeField]
     Slider healthSlider;
+    [SerializeField]
+    public CanvasGroup HUDGuidanceText;
+    [SerializeField]
+    public TMP_Text GuidanceText;
 
-    void Start()
+    void Awake()
     {
-       // healthSlider.value = 100f;
+        if (Instance != null && Instance != this)
+        {
+            Destroy(Instance);
+        }
+        else
+        {
+            //If we are the Instance, Try to get a valid reference to the current player
+            Instance = this;
+        }
     }
+
 
     void Update()
     {
         
-
         if (GameManager.Instance != null && GameManager.Instance.currentPlayer != null && GameManager.Instance.currentPlayer.GetComponentInChildren<Health>() != null)
         {
             healthSlider.maxValue = GameManager.Instance.currentPlayer.GetComponentInChildren<Health>().currentMaxHealth;
