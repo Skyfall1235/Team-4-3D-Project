@@ -27,8 +27,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        
-        //rain sound
+
 
         //Manage singleton instance of GameManager
         if (Instance != null && Instance != this)

@@ -12,19 +12,6 @@ public class WeaponManager : MonoBehaviour
     void Awake()
     {
         UpdateWeaponInventory();
-        currentWeapon = weaponInventory[desiredWeaponIndex];
-        foreach(Weapon weapon in weaponInventory)
-        {
-            if(weapon != currentWeapon)
-            {
-                weapon.gameObject.SetActive(false);
-            }
-            else
-            {
-                weapon.gameObject.SetActive(true);
-            }
-        }
-
     }
 
     // Update is called once per frame
@@ -89,13 +76,30 @@ public class WeaponManager : MonoBehaviour
             currentWeapon.gameObject.SetActive(true);
         }
     }
-    void UpdateWeaponInventory()
+    public void UpdateWeaponInventory()
     {
         weaponInventory.Clear();
-        Weapon[] weaponsUnderManager = GetComponentsInChildren<Weapon>();
+        Weapon[] weaponsUnderManager = GetComponentsInChildren<Weapon>(true);
         foreach (Weapon weapon in weaponsUnderManager)
         {
             weaponInventory.Add(weapon);
         }
+        if(desiredWeaponIndex > weaponInventory.Count - 1)
+        {
+            desiredWeaponIndex = weaponInventory.Count - 1;
+        }
+        currentWeapon = weaponInventory[desiredWeaponIndex];
+        foreach (Weapon weapon in weaponInventory)
+        {
+            if (weapon != currentWeapon)
+            {
+                weapon.gameObject.SetActive(false);
+            }
+            else
+            {
+                weapon.gameObject.SetActive(true);
+            }
+        }
     }
+    
 }

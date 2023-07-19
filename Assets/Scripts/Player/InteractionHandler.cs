@@ -5,7 +5,6 @@ using UnityEngine;
 public class InteractionHandler : MonoBehaviour
 {
     Camera cam;
-
     [SerializeField] private List<GameObject> interactableObjectsInRange= new List<GameObject>();
     private void OnTriggerEnter(Collider other)
     {
@@ -48,9 +47,9 @@ public class InteractionHandler : MonoBehaviour
     }
     private bool IsVisibleOnScreen(GameObject objectToCheck)
     {
-        Vector3 screenPos = cam.WorldToScreenPoint(objectToCheck.transform.position);
-        bool onScreen = screenPos.x > 0f && screenPos.x < Screen.width && screenPos.y > 0f && screenPos.y < Screen.height;
-        if (onScreen && objectToCheck.GetComponent<Renderer>() != null && objectToCheck.GetComponent<Renderer>().isVisible)
+        //Vector3 screenPos = cam.WorldToScreenPoint(objectToCheck.transform.position);
+        //bool onScreen = screenPos.x > 0f && screenPos.x < Screen.width && screenPos.y > 0f && screenPos.y < Screen.height;
+        if (objectToCheck.GetComponent<Renderer>() != null && objectToCheck.GetComponent<Renderer>().isVisible)
         {
             return true;
         }
