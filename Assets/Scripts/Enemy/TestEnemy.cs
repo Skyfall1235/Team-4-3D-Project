@@ -25,7 +25,6 @@ public class TestEnemy : Health, IResetable
     Rigidbody[] rigidbodies;
     Renderer[] renderers;
     Collider[] colliders;
-    bool hasRagdolled = false;
     bool hasBeenRemovedFromScene = false;
     public bool isAgroOnPlayer = false;
     private bool agroSoundHasPlayed = false;
@@ -58,7 +57,7 @@ public class TestEnemy : Health, IResetable
     }
     private void Update()
     {
-        if (!agroSoundHasPlayed && isAgroOnPlayer)
+        if (!agroSoundHasPlayed && isAgroOnPlayer && !IsDead)
         {
             
           if (SoundManager.Instance != null)
@@ -104,7 +103,7 @@ public class TestEnemy : Health, IResetable
         {
             agent.isStopped = true;
         }
-        if(hasRagdolled && !IsVisibleOnScreen() && !hasBeenRemovedFromScene)
+        if( IsDead && !IsVisibleOnScreen() && !hasBeenRemovedFromScene)
         {
             foreach(Renderer renderer in renderers)
             {
@@ -131,11 +130,18 @@ public class TestEnemy : Health, IResetable
     }
     public override void OnDamaged()
     {
-        Debug.Log(CurrentHealth.ToString());
+        if(!isAgroOnPlayer && !IsDead)
+        {
+            isAgroOnPlayer= true;
+        }
     }
     public override void OnDeath()
     {
-        animator.SetBool("Dead", true);
+        animator.enabled = false;
+        foreach(Rigidbody rb in rigidbodies)
+        {
+            rb.isKinematic=false;
+        }
     }
     //This has to be called by collision assistant because the child collision events aren't handled by OnCollisionEnter in this script
     public void CollisionDetected(Collision collision)
@@ -153,15 +159,7 @@ public class TestEnemy : Health, IResetable
             }
         }
     }
-    public void PostDeathAnimationFunctionaility()
-    {
-        foreach(Rigidbody rb in rigidbodies)
-        {
-            rb.isKinematic = false;
-        }
-        hasRagdolled = true;
-        animator.enabled = false;
-    }
+
     public void ResetObject()
     {
         foreach (Renderer renderer in renderers)
@@ -178,7 +176,6 @@ public class TestEnemy : Health, IResetable
             coll.enabled = true;
         }
         animator.enabled = true;
-        animator.SetBool("Dead", false);
         transform.position = startingPosition;
         transform.rotation = startingRotation;
         MaxHeal();
