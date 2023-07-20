@@ -7,7 +7,7 @@ public class EnemyAgroTrigger : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if(GameManager.Instance != null && other.gameObject == GameManager.Instance.playerCharacterTransform.gameObject)
+        if(GameManager.Instance != null && GameManager.Instance.currentPlayer != null && other.gameObject == GameManager.Instance.playerCharacterTransform.gameObject)
         {
             BoxCollider[] triggers = GetComponents<BoxCollider>();
             List<GameObject> enemiesInTrigger = new List<GameObject>();

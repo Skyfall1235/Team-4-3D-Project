@@ -8,7 +8,7 @@ public class Shotgun : Weapon
 {
     [Header("Weapon Specific Options")]
     [SerializeField] int projectileCount;
-  
+    [SerializeField] GameObject hitParticlePrefab;
     int remainingPenetrations;
     bool canFire = true;
     public override void Fire()
@@ -60,6 +60,10 @@ public class Shotgun : Weapon
                         if (projectileDictionary.Value.ElementAt(i).Value.collider.gameObject.transform.root.GetComponentInChildren<IDamagable>() != null)
                         {
                             projectileDictionary.Value.ElementAt(i).Value.collider.gameObject.transform.root.GetComponentInChildren<IDamagable>().Damage(weaponDamage);
+                            if (projectileDictionary.Value.ElementAt(i).Value.collider.gameObject.transform.root.GetComponentInChildren<TestEnemy>() != null && hitParticlePrefab != null)
+                            {
+                                Instantiate(hitParticlePrefab, projectileDictionary.Value.ElementAt(i).Value.point, Quaternion.FromToRotation(hitParticlePrefab.transform.forward, projectileDictionary.Value.ElementAt(i).Value.normal), projectileDictionary.Value.ElementAt(i).Value.collider.transform);
+                            }
                         }
                         if (projectileDictionary.Value.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>() != null && !projectileDictionary.Value.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>().isKinematic)
                         {

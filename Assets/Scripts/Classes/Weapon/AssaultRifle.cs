@@ -1,11 +1,16 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AssaultRifle : Weapon
 {
     int remainingPenetrations;
     bool canFire = true;
+
+    [Header("Weapon Specific Options")]
+    [SerializeField] GameObject hitParticlePrefab;
+
     public override void Fire()
     {
         //If we are not reloading and our clip has bullets in it
@@ -45,6 +50,10 @@ public class AssaultRifle : Weapon
                 {
                     if (raycastHitDistances.ElementAt(i).Value.collider.gameObject.transform.root.GetComponentInChildren<IDamagable>() != null)
                     {
+                        if(raycastHitDistances.ElementAt(i).Value.collider.gameObject.transform.root.GetComponentInChildren<TestEnemy>() != null && hitParticlePrefab != null)
+                        {
+                            Instantiate(hitParticlePrefab, raycastHitDistances.ElementAt(i).Value.collider.transform.TransformPoint(raycastHitDistances.ElementAt(i).Value.point), Quaternion.FromToRotation(hitParticlePrefab.transform.forward, raycastHitDistances.ElementAt(i).Value.normal) ,raycastHitDistances.ElementAt(i).Value.collider.transform);
+                        }
                         raycastHitDistances.ElementAt(i).Value.collider.gameObject.transform.root.GetComponentInChildren<IDamagable>().Damage(weaponDamage);
                     }
                     if (raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>() != null && !raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>().isKinematic)

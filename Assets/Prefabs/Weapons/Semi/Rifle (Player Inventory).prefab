@@ -5040,3 +5040,4 @@ MonoBehaviour:
   adsWeaponPosition: {x: 0, y: 0.52, z: 0.69}
   maxHipFireWeaponInaccuracy: {x: 0, y: 0}
   maxADSWeaponInaccuracy: {x: 0, y: 0}
+  hitParticlePrefab: {fileID: 3640883042109098965, guid: e361b65ef39309c488713172947a3e95, type: 3}

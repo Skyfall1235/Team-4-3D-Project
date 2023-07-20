@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,7 +9,10 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] GameObject playerPrefab;
     [SerializeField] float respawnTime = 2f;
-    [SerializeField] Vector3 spawnpoint;
+    [SerializeField] Vector3 spawnLocation;
+    [SerializeField] Vector3 spawnRotation;
+
+
     public static GameManager Instance { get; private set; }
     GameObject[] foundPlayers;
     public GameObject currentPlayer { get; private set; }
@@ -61,27 +65,30 @@ public class GameManager : MonoBehaviour
         
     }
 
-    //Method for looping at a time sounds
+    //Method for looping at a time soundsS
     IEnumerator PlayAmbientSoundCoroutine(float timeBetweenPlay, GameObject objectForSound, string nameOfSound, bool loop)
     { 
     yield return new WaitForSeconds(timeBetweenPlay);
         if (SoundManager.Instance != null)
-            {
-                SoundManager.Instance.PlaySoundOnObject(objectForSound, nameOfSound, loop);
+        {
+            SoundManager.Instance.PlaySoundOnObject(objectForSound, nameOfSound, loop);
             StartCoroutine(PlayAmbientSoundCoroutine(timeBetweenPlay, objectForSound, nameOfSound, loop));
-            }
+        }
     }
 
 
     public void OnPlayerDeath()
     {
-        //Invoke("RespawnPlayer", respawnTime);
-        //MP adding
-        SceneManager.LoadScene("You Died");
+        Invoke("RespawnPlayer", respawnTime);
+        var resetables = FindObjectsOfType<MonoBehaviour>().OfType<IResetable>();
+        foreach (IResetable resetable in resetables)
+        {
+            resetable.ResetObject();
+        }
     }
     void RespawnPlayer()
     {
-        currentPlayer = Instantiate(playerPrefab, spawnpoint, Quaternion.identity);
+        currentPlayer = Instantiate(playerPrefab, spawnLocation, Quaternion.Euler(spawnRotation));
         playerCharacterTransform = currentPlayer.GetComponentInChildren<FirstPersonControllerV2>().gameObject.transform;
     }
 }
