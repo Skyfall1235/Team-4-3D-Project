@@ -55,12 +55,33 @@ public class Shotgun : Weapon
                 remainingPenetrations = weaponPenetrationPower;
                 for (int i = 0; i < projectileDictionary.Value.Count && remainingPenetrations > 0; i++)
                 {
-                    if (!gameObjectsHit.Contains(projectileDictionary.Value.ElementAt(i).Value.collider.transform.root.gameObject))
+                    bool hasDamagableComponent = projectileDictionary.Value.ElementAt(i).Value.collider.gameObject.GetComponentInParent<IDamagable>() != null || projectileDictionary.Value.ElementAt(i).Value.collider.gameObject.GetComponentInChildren<IDamagable>() != null;
+                    bool hasEnemyComponent = projectileDictionary.Value.ElementAt(i).Value.collider.gameObject.GetComponentInParent<TestEnemy>() != null || projectileDictionary.Value.ElementAt(i).Value.collider.gameObject.GetComponentInChildren<TestEnemy>() != null;
+
+                    GameObject componentToCheck;
+                    if (hasDamagableComponent)
                     {
-                        if (projectileDictionary.Value.ElementAt(i).Value.collider.gameObject.transform.root.GetComponentInChildren<IDamagable>() != null)
+                        if (projectileDictionary.Value.ElementAt(i).Value.collider.gameObject.GetComponentInParent<IDamagable>() != null)
                         {
-                            projectileDictionary.Value.ElementAt(i).Value.collider.gameObject.transform.root.GetComponentInChildren<IDamagable>().Damage(weaponDamage);
-                            if (projectileDictionary.Value.ElementAt(i).Value.collider.gameObject.transform.root.GetComponentInChildren<TestEnemy>() != null && hitParticlePrefab != null)
+                            MonoBehaviour m = projectileDictionary.Value.ElementAt(i).Value.collider.gameObject.GetComponentInParent<IDamagable>() as MonoBehaviour;
+                            componentToCheck = m.gameObject;
+                        }
+                        else
+                        {
+                            MonoBehaviour m = projectileDictionary.Value.ElementAt(i).Value.collider.gameObject.GetComponentInParent<IDamagable>() as MonoBehaviour;
+                            componentToCheck = m.gameObject;
+                        }
+                    }
+                    else
+                    {
+                        componentToCheck = projectileDictionary.Value.ElementAt(i).Value.collider.gameObject;
+                    }
+                    if (!gameObjectsHit.Contains(componentToCheck))
+                    {
+                        if (hasDamagableComponent)
+                        {
+                            componentToCheck.GetComponent<IDamagable>().Damage(weaponDamage);
+                            if (hasEnemyComponent && hitParticlePrefab != null)
                             {
                                 Instantiate(hitParticlePrefab, projectileDictionary.Value.ElementAt(i).Value.point, Quaternion.FromToRotation(hitParticlePrefab.transform.forward, projectileDictionary.Value.ElementAt(i).Value.normal), projectileDictionary.Value.ElementAt(i).Value.collider.transform);
                             }

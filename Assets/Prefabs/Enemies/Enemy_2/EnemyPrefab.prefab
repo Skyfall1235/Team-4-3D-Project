@@ -1639,7 +1639,8 @@ MonoBehaviour:
   - {fileID: 6400796926306748203}
   - {fileID: 5308563827032534622}
   - {fileID: 2635094043254479703}
-  attackDamage: 20
+  attackDamage: 10
+  isAgroOnPlayer: 0
 --- !u!1 &5204126385045155225 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -9070493210130169274, guid: 73be1cd380e6b2d449f9679263a03489, type: 3}

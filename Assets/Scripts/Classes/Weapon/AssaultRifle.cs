@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class AssaultRifle : Weapon
@@ -46,15 +45,37 @@ public class AssaultRifle : Weapon
             List<GameObject> gameObjectsHit = new List<GameObject>();
             for (int i = 0; i < raycastHitDistances.Count && remainingPenetrations > 0; i++)
             {
-                if (!gameObjectsHit.Contains(raycastHitDistances.ElementAt(i).Value.collider.transform.root.gameObject))
+                bool hasDamagableComponent = raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponentInParent<IDamagable>() != null || raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponentInChildren<IDamagable>() != null;
+                bool hasEnemyComponent = raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponentInParent<TestEnemy>() != null || raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponentInChildren<TestEnemy>() != null;
+
+                GameObject componentToCheck;
+                if (hasDamagableComponent)
                 {
-                    if (raycastHitDistances.ElementAt(i).Value.collider.gameObject.transform.root.GetComponentInChildren<IDamagable>() != null)
+                    if (raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponentInParent<IDamagable>() != null)
                     {
-                        if(raycastHitDistances.ElementAt(i).Value.collider.gameObject.transform.root.GetComponentInChildren<TestEnemy>() != null && hitParticlePrefab != null)
+                        MonoBehaviour m = raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponentInParent<IDamagable>() as MonoBehaviour;
+                        componentToCheck = m.gameObject;
+                    }
+                    else
+                    {
+                        MonoBehaviour m = raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponentInParent<IDamagable>() as MonoBehaviour;
+                        componentToCheck = m.gameObject;
+                    }
+                }
+                else
+                {
+                    componentToCheck = raycastHitDistances.ElementAt(i).Value.collider.gameObject;
+                }
+
+                if (!gameObjectsHit.Contains(componentToCheck))
+                {
+                    if (hasDamagableComponent)
+                    {
+                        if (hasEnemyComponent && hitParticlePrefab != null)
                         {
-                            Instantiate(hitParticlePrefab, raycastHitDistances.ElementAt(i).Value.collider.transform.TransformPoint(raycastHitDistances.ElementAt(i).Value.point), Quaternion.FromToRotation(hitParticlePrefab.transform.forward, raycastHitDistances.ElementAt(i).Value.normal) ,raycastHitDistances.ElementAt(i).Value.collider.transform);
+                            Instantiate(hitParticlePrefab, raycastHitDistances.ElementAt(i).Value.point, Quaternion.FromToRotation(hitParticlePrefab.transform.forward, raycastHitDistances.ElementAt(i).Value.normal), raycastHitDistances.ElementAt(i).Value.collider.transform);
                         }
-                        raycastHitDistances.ElementAt(i).Value.collider.gameObject.transform.root.GetComponentInChildren<IDamagable>().Damage(weaponDamage);
+                        componentToCheck.GetComponent<IDamagable>().Damage(weaponDamage);
                     }
                     if (raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>() != null && !raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>().isKinematic)
                     {

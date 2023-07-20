@@ -9,19 +9,18 @@ public class FallingVent : MonoBehaviour, IResetable, IDamagable
     Vector3 startPosition;
     void Start()
     {
-        if(GetComponent<Rigidbody>() != null)
-        {
-            rb = GetComponent<Rigidbody>();
-        }
+
+        rb = GetComponent<Rigidbody>();
         startPosition= transform.position;
     }
     public void Damage(int damage) 
     {
         rb.isKinematic = false;
+        rb.AddForce(Vector3.zero);
     }
     public void ResetObject()
     {
-        rb.isKinematic = false;
+        rb.isKinematic = true;
         transform.position = startPosition;
     }
 }

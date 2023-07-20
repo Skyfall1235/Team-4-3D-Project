@@ -168,7 +168,10 @@ public class TestEnemy : Health, IResetable
         }
         foreach (Rigidbody rb in rigidbodies)
         {
-            rb.velocity = Vector3.zero;
+            if (!rb.isKinematic)
+            {
+                rb.velocity = Vector3.zero;
+            }
             rb.isKinematic = true;
         }
         foreach (Collider coll in colliders)
