@@ -21,44 +21,40 @@ public class Rifle : Weapon
             {
                 SoundManager.Instance.PlaySoundOnObject(gameObject, "Rifle Shot", false);
             }
-            if(playerCam!= null)
+            //calculate deviation of shot
+            Vector3 hipFireShotDeviation = (playerCam.transform.up * Random.Range(-maxHipFireWeaponInaccuracy.x, maxHipFireWeaponInaccuracy.x)) + (playerCam.transform.right * Random.Range(-maxHipFireWeaponInaccuracy.y, maxHipFireWeaponInaccuracy.y));
+            Vector3 adsShotdeviation = (playerCam.transform.up * Random.Range(-maxADSWeaponInaccuracy.x, maxADSWeaponInaccuracy.x)) + (playerCam.transform.right * Random.Range(-maxADSWeaponInaccuracy.y, maxADSWeaponInaccuracy.y));
+            //Do a raycast and add the results to tthe array
+            RaycastHit[] bulletHits = Physics.RaycastAll(playerCam.transform.position, playerCam.transform.forward + (isADS ? adsShotdeviation : hipFireShotDeviation), maxFireDistance, bulletLayerMask, QueryTriggerInteraction.Ignore);
+            //create a sorted dictionary to add our raycast hits to so we can do bullet penetration
+            SortedDictionary<float, RaycastHit> raycastHitDistances = new SortedDictionary<float, RaycastHit>();
+            //add the raycast hit distances and the corrosponding raycast hit to the sorted dictionary so we can go through the elements and decrease our remaining penetrations after each hit
+            foreach (RaycastHit hit in bulletHits)
             {
-                //calculate deviation of shot
-                Vector3 hipFireShotDeviation = (playerCam.transform.up * Random.Range(-maxHipFireWeaponInaccuracy.x, maxHipFireWeaponInaccuracy.x)) + (playerCam.transform.right * Random.Range(-maxHipFireWeaponInaccuracy.y, maxHipFireWeaponInaccuracy.y));
-                Vector3 adsShotdeviation = (playerCam.transform.up * Random.Range(-maxADSWeaponInaccuracy.x, maxADSWeaponInaccuracy.x)) + (playerCam.transform.right * Random.Range(-maxADSWeaponInaccuracy.y, maxADSWeaponInaccuracy.y));
-                //Do a raycast and add the results to tthe array
-                RaycastHit[] bulletHits = Physics.RaycastAll(playerCam.transform.position, playerCam.transform.forward + (isADS ? adsShotdeviation : hipFireShotDeviation), maxFireDistance, bulletLayerMask, QueryTriggerInteraction.Ignore);
-                //create a sorted dictionary to add our raycast hits to so we can do bullet penetration
-                SortedDictionary<float, RaycastHit> raycastHitDistances = new SortedDictionary<float, RaycastHit>();
-                //add the raycast hit distances and the corrosponding raycast hit to the sorted dictionary so we can go through the elements and decrease our remaining penetrations after each hit
-                foreach (RaycastHit hit in bulletHits)
+                if (!raycastHitDistances.ContainsKey(Vector3.Distance(playerCam.transform.position, hit.point)))
                 {
-                    if (!raycastHitDistances.ContainsKey(Vector3.Distance(playerCam.transform.position, hit.point)))
-                    {
-                        raycastHitDistances.Add(Vector3.Distance(playerCam.transform.position, hit.point), hit);
-                    }
-                }
-                remainingPenetrations = weaponPenetrationPower;
-                //Each time the bullet comes into contact with something, decrease its penetration amount and add required effects
-                List<GameObject> gameObjectsHit = new List<GameObject>();
-                for (int i = 0; i < raycastHitDistances.Count && remainingPenetrations > 0; i++)
-                {
-                    if (!gameObjectsHit.Contains(raycastHitDistances.ElementAt(i).Value.collider.transform.root.gameObject))
-                    {
-                        if (raycastHitDistances.ElementAt(i).Value.collider.gameObject.transform.root.GetComponentInChildren<IDamagable>() != null)
-                        {
-                            raycastHitDistances.ElementAt(i).Value.collider.gameObject.transform.root.GetComponentInChildren<IDamagable>().Damage(weaponDamage);
-                        }
-                        if (raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>() != null && !raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>().isKinematic)
-                        {
-                            raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>().AddForce(playerCam.transform.forward * 2, ForceMode.Impulse);
-                        }
-                        gameObjectsHit.Add(raycastHitDistances.ElementAt(i).Value.collider.transform.root.gameObject);
-                        remainingPenetrations--;
-                    }
+                    raycastHitDistances.Add(Vector3.Distance(playerCam.transform.position, hit.point), hit);
                 }
             }
-            
+            remainingPenetrations = weaponPenetrationPower;
+            //Each time the bullet comes into contact with something, decrease its penetration amount and add required effects
+            List<GameObject> gameObjectsHit = new List<GameObject>();
+            for (int i = 0; i < raycastHitDistances.Count && remainingPenetrations > 0; i++)
+            {
+                if (!gameObjectsHit.Contains(raycastHitDistances.ElementAt(i).Value.collider.transform.root.gameObject))
+                {
+                    if (raycastHitDistances.ElementAt(i).Value.collider.gameObject.transform.root.GetComponentInChildren<IDamagable>() != null)
+                    {
+                        raycastHitDistances.ElementAt(i).Value.collider.gameObject.transform.root.GetComponentInChildren<IDamagable>().Damage(weaponDamage);
+                    }
+                    if (raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>() != null && !raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>().isKinematic)
+                    {
+                        raycastHitDistances.ElementAt(i).Value.collider.gameObject.GetComponent<Rigidbody>().AddForce(playerCam.transform.forward * 2, ForceMode.Impulse);
+                    }
+                    gameObjectsHit.Add(raycastHitDistances.ElementAt(i).Value.collider.transform.root.gameObject);
+                    remainingPenetrations--;
+                }
+            }
             //Deal with fire cooldown
             canFire = false;
             Invoke("FinishFireCooldown", fireCooldown);
