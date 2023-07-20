@@ -865,6 +865,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3032503926871410778, guid: ad780d44052149b41929d1b3b0e41bdf, type: 3}
+      propertyPath: antialiasingMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5156519452676584393, guid: ad780d44052149b41929d1b3b0e41bdf, type: 3}
       propertyPath: m_RootOrder
       value: 23
@@ -912,6 +916,10 @@ PrefabInstance:
     - target: {fileID: 5710135824506162211, guid: ad780d44052149b41929d1b3b0e41bdf, type: 3}
       propertyPath: m_Name
       value: WeaponOverlayCam
+      objectReference: {fileID: 0}
+    - target: {fileID: 8899034493144695678, guid: ad780d44052149b41929d1b3b0e41bdf, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 768
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2767,6 +2775,69 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9649f53ad4062224ba80b05e80b8c99b, type: 3}
+--- !u!1 &581383723
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 581383726}
+  - component: {fileID: 581383725}
+  - component: {fileID: 581383724}
+  m_Layer: 9
+  m_Name: Post Processing
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &581383724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 581383723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6318b959bc400054eb94d2ce56dee37d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxVignetteStrength: 0.6
+--- !u!114 &581383725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 581383723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sharedProfile: {fileID: 11400000, guid: 91965730fa3b0b34389086013cf925c6, type: 2}
+  isGlobal: 1
+  blendDistance: 0
+  weight: 1
+  priority: 0
+--- !u!4 &581383726
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 581383723}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 38
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &590073853 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 9649f53ad4062224ba80b05e80b8c99b, type: 3}
@@ -10338,6 +10409,10 @@ PrefabInstance:
     - target: {fileID: 8761116072154708242, guid: c658e5cd6b273244695529cdd4afa170, type: 3}
       propertyPath: m_Name
       value: Main Scene Cam
+      objectReference: {fileID: 0}
+    - target: {fileID: 9079407393127935145, guid: c658e5cd6b273244695529cdd4afa170, type: 3}
+      propertyPath: antialiasingMode
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
