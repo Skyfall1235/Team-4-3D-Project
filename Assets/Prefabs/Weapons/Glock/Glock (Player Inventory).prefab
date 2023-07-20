@@ -5023,7 +5023,7 @@ MonoBehaviour:
   bulletLayerMask:
     serializedVersion: 2
     m_Bits: 193
-  weaponDamage: 19
+  weaponDamage: 20
   baseMaxAmmo: 120
   currentMaxAmmo: 0
   currentAmmo: 0
