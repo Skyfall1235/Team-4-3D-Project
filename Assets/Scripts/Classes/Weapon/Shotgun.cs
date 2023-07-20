@@ -31,7 +31,7 @@ public class Shotgun : Weapon
             for (int i = 0; i < projectileCount; i++)
             {
                 //for every shot we need to shoot, calculate a shot deviation
-                Vector3 hipFireShotDeviation = (playerCam.transform.up * Random.Range(-maxHipFireWeaponInaccuracy.x, maxHipFireWeaponInaccuracy.x)) + (playerCam.transform.right * Random.Range(-maxHipFireWeaponInaccuracy.y, maxHipFireWeaponInaccuracy.y));
+                Vector3 hipFireShotDeviation = (playerCam.gameObject.transform.up * Random.Range(-maxHipFireWeaponInaccuracy.x, maxHipFireWeaponInaccuracy.x)) + (playerCam.gameObject.transform.right * Random.Range(-maxHipFireWeaponInaccuracy.y, maxHipFireWeaponInaccuracy.y));
                 Vector3 adsShotdeviation = (playerCam.transform.up * Random.Range(-maxADSWeaponInaccuracy.x, maxADSWeaponInaccuracy.x)) + (playerCam.transform.right * Random.Range(-maxADSWeaponInaccuracy.y, maxADSWeaponInaccuracy.y));
                 //fire the raycast for the shot
                 RaycastHit[] bulletHits = Physics.RaycastAll(playerCam.transform.position, playerCam.transform.forward + (isADS ? adsShotdeviation : hipFireShotDeviation), maxFireDistance, bulletLayerMask);
@@ -88,6 +88,10 @@ public class Shotgun : Weapon
                 SoundManager.Instance.PlaySoundOnObject(gameObject, "Shotgun Reload", false);
             }
         }
+    }
+    private void Awake()
+    {
+        AquirePlayerCam();
     }
     private void FinishFireCooldown()
     {

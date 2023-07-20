@@ -1,4 +1,5 @@
 using System.Collections;
+using Cinemachine;
 using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
@@ -44,7 +45,7 @@ public abstract class Weapon : MonoBehaviour
     public Vector2 maxADSWeaponInaccuracy;
 
     protected RecoilHandler recoilHandler;
-    protected Camera playerCam;
+    protected CinemachineVirtualCamera playerCam;
 
     private void Start()
     {
@@ -159,11 +160,11 @@ public abstract class Weapon : MonoBehaviour
             isADS = false;
         }
     }
-    private void AquirePlayerCam()
+    protected void AquirePlayerCam()
     {
-        if (GameManager.Instance != null && GameManager.Instance.currentPlayer != null && GameManager.Instance.currentPlayer.transform.root.GetComponentInChildren<Camera>() != null)
+        if (GameManager.Instance != null && GameManager.Instance.currentPlayer != null && GameManager.Instance.currentPlayer.transform.root.GetComponentInChildren<CinemachineVirtualCamera>() != null)
         {
-            playerCam = GameManager.Instance.currentPlayer.transform.root.GetComponentInChildren<Camera>();
+            playerCam = GameManager.Instance.currentPlayer.transform.root.GetComponentInChildren<CinemachineVirtualCamera>(true);
         }
     }
 }

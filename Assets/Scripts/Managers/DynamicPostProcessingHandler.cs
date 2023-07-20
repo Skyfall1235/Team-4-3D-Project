@@ -24,12 +24,24 @@ public class DynamicPostProcessingHandler : MonoBehaviour
     private void Update()
     {
         UpdateVignette();
+        UpdateEnablePostProcessing();
     }
     void UpdateVignette()
     {
         if (GameManager.Instance != null && GameManager.Instance.currentPlayer != null && GameManager.Instance.currentPlayer.GetComponentInChildren<Health>() != null)
         {
             _vignette.intensity.value = ((float)GameManager.Instance.currentPlayer.GetComponentInChildren<Health>().CurrentHealth).Remap(0, GameManager.Instance.currentPlayer.GetComponentInChildren<Health>().currentMaxHealth, maxVignetteStrength, 0);
+        }
+    }
+    void UpdateEnablePostProcessing()
+    {
+        if(GameManager.Instance != null && GameManager.Instance.currentPlayer == null)
+        {
+            _postProcessVolume.enabled = false;
+        }
+        else
+        {
+            _postProcessVolume.enabled = true;
         }
     }
 }

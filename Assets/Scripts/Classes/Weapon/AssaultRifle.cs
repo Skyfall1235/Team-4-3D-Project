@@ -74,13 +74,6 @@ public class AssaultRifle : Weapon
             }
         }
     }
-    private void Awake()
-    {
-        if (GameManager.Instance != null && GameManager.Instance.currentPlayer != null && GameManager.Instance.currentPlayer.transform.root.GetComponentInChildren<Camera>() != null)
-        {
-            playerCam = GameManager.Instance.currentPlayer.transform.root.GetComponentInChildren<Camera>();
-        }
-    }
     private void FinishFireCooldown()
     {
         canFire = true;

@@ -75,7 +75,10 @@ public class Pistol : Weapon
             }
         }
     }
-
+    private void Awake()
+    {
+        AquirePlayerCam();
+    }
     private void FinishFireCooldown()
     {
         canFire = true;

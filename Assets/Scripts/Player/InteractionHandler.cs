@@ -1,10 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
-
-[RequireComponent(typeof(Camera))]
 public class InteractionHandler : MonoBehaviour
 {
-    Camera cam;
     [SerializeField] private List<GameObject> interactableObjectsInRange= new List<GameObject>();
     private void OnTriggerEnter(Collider other)
     {
@@ -26,13 +23,6 @@ public class InteractionHandler : MonoBehaviour
             {
                 other.gameObject.GetComponentInParent<Outline>().enabled = false;
             }
-        }
-    }
-    private void Start()
-    {
-        if(GetComponent<Camera>() != null)
-        {
-            cam = GetComponent<Camera>();
         }
     }
     private void Update()
