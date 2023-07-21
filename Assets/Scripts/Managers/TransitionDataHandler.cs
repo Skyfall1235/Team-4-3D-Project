@@ -47,7 +47,7 @@ public class TransitionDataHandler : MonoBehaviour
         //Tell our function to stop listening for a scene change as soon as this script is disabled. Remember to always have an unsubscription for every delegate you subscribe to!
         SceneManager.sceneLoaded -= OnSceneChanged;
     }
-    void UpdateData()
+    public void UpdateData()
     {
         if(UpgradeManager.Instance != null)
         {
@@ -68,7 +68,7 @@ public class TransitionDataHandler : MonoBehaviour
         }
     }
 
-    void LoadStoredData()
+    public void LoadStoredData()
     {
         if (UpgradeManager.Instance != null)
         {
