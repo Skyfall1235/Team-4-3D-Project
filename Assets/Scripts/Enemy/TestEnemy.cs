@@ -151,10 +151,30 @@ public class TestEnemy : Health, IResetable
             List<GameObject> damagedGameObjects = new List<GameObject>();
             foreach (ContactPoint contact in collision.contacts)
             {
-                if (!damagedGameObjects.Contains(contact.otherCollider.transform.root.gameObject) && contact.otherCollider.transform.root.gameObject.GetComponentInChildren<IDamagable>() != null && DamagingColliders.Contains(contact.thisCollider))
+                GameObject componentToCheck;
+                bool hasDamagableInterface = contact.otherCollider.GetComponentInChildren<IDamagable>() != null || contact.otherCollider.GetComponentInParent<IDamagable>() != null;
+                if (hasDamagableInterface)
                 {
-                    contact.otherCollider.transform.root.gameObject.GetComponentInChildren<IDamagable>().Damage(attackDamage);
-                    damagedGameObjects.Add(contact.otherCollider.transform.root.gameObject);
+                    if(contact.otherCollider.GetComponentInChildren<IDamagable>() != null)
+                    {
+                        MonoBehaviour m = contact.otherCollider.GetComponentInChildren<IDamagable>() as MonoBehaviour;
+                        componentToCheck = m.gameObject;
+                    }
+                    else
+                    {
+                        MonoBehaviour m = contact.otherCollider.GetComponentInParent<IDamagable>() as MonoBehaviour;
+                        componentToCheck = m.gameObject;
+                    }
+                }
+                else
+                {
+                    componentToCheck = contact.otherCollider.gameObject;
+                }
+
+                if (!damagedGameObjects.Contains(componentToCheck) && hasDamagableInterface && DamagingColliders.Contains(contact.thisCollider))
+                {
+                    componentToCheck.GetComponent<IDamagable>().Damage(attackDamage);
+                    damagedGameObjects.Add(componentToCheck);
                 }
             }
         }

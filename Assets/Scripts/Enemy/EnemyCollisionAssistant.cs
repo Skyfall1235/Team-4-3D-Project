@@ -9,14 +9,14 @@ public class EnemyCollisionAssistant : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(transform.root.GetComponentInChildren<TestEnemy>() != null)
+        if(GetComponentInParent<TestEnemy>() != null)
         {
-            enemyScript = transform.root.GetComponentInChildren<TestEnemy>();
+            enemyScript = GetComponentInParent<TestEnemy>();
         }
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if(enemyScript!= null)
+        if(enemyScript != null)
         {
             enemyScript.CollisionDetected(collision);
         }
