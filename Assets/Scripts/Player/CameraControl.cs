@@ -24,18 +24,21 @@ public class CameraControl : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        //get the mouse x and y values
-        mousePos.x = Input.GetAxisRaw("Mouse X");
-        mousePos.y = Input.GetAxisRaw("Mouse Y");
-        //set the rotation values based on the sensitivity
-        rotation.y += mousePos.x * xMouseSensitivity;
-        rotation.x -= mousePos.y * yMouseSensitivity;
-        //clamp the x rotation so that the camera can't rotate past a certtain point on that axis
-        rotation.x = Mathf.Clamp(rotation.x, -90f, 90f);
-        //transform the camera's rotation based on the values
-        cam.transform.localRotation = Quaternion.Euler(rotation.x, rotation.y, 0);
-        //transform the orientation value so it can be used as the forward in the player movement script
-        orientation.transform.localRotation = Quaternion.Euler(0, rotation.y, 0);
+        if(GameManager.Instance != null && !GameManager.Instance.isPaused) 
+        {
+            //get the mouse x and y values
+            mousePos.x = Input.GetAxisRaw("Mouse X");
+            mousePos.y = Input.GetAxisRaw("Mouse Y");
+            //set the rotation values based on the sensitivity
+            rotation.y += mousePos.x * xMouseSensitivity;
+            rotation.x -= mousePos.y * yMouseSensitivity;
+            //clamp the x rotation so that the camera can't rotate past a certtain point on that axis
+            rotation.x = Mathf.Clamp(rotation.x, -90f, 90f);
+            //transform the camera's rotation based on the values
+            cam.transform.localRotation = Quaternion.Euler(rotation.x, rotation.y, 0);
+            //transform the orientation value so it can be used as the forward in the player movement script
+            orientation.transform.localRotation = Quaternion.Euler(0, rotation.y, 0);
 
+        }
     }
 }

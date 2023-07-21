@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,12 +11,24 @@ public class GameManager : MonoBehaviour
     [SerializeField] Vector3 spawnLocation;
     [SerializeField] Vector3 spawnRotation;
 
+    public bool isPaused
+    {
+        get => Time.timeScale <= 0;
+        set => Time.timeScale = value ? 0 : 1;
+    }
 
     public static GameManager Instance { get; private set; }
     GameObject[] foundPlayers;
     public GameObject currentPlayer { get; private set; }
     public Transform playerCharacterTransform { get; private set; }
 
+    private void Update()
+    {
+        if(Input.GetKeyUp(KeyCode.Escape))
+        {
+            isPaused = !isPaused;
+        }
+    }
     private void Start()
     {
         StartCoroutine(PlayAmbientSoundCoroutine(120.0f, playerCharacterTransform.gameObject, "AmbientLaugh", false));
@@ -28,7 +39,6 @@ public class GameManager : MonoBehaviour
             SoundManager.Instance.PlaySoundOnObject(gameObject, "RainAmbient", true);
         }
     }
-
     private void Awake()
     {
 
@@ -64,8 +74,7 @@ public class GameManager : MonoBehaviour
         }
         
     }
-
-    //Method for looping at a time soundsS
+    //Method for looping at a time sounds
     IEnumerator PlayAmbientSoundCoroutine(float timeBetweenPlay, GameObject objectForSound, string nameOfSound, bool loop)
     { 
     yield return new WaitForSeconds(timeBetweenPlay);
@@ -75,8 +84,6 @@ public class GameManager : MonoBehaviour
             StartCoroutine(PlayAmbientSoundCoroutine(timeBetweenPlay, objectForSound, nameOfSound, loop));
         }
     }
-
-
     public void OnPlayerDeath()
     {
         Invoke("RespawnPlayer", respawnTime);
