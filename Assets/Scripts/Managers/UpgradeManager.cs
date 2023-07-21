@@ -5,19 +5,32 @@ using UnityEngine;
 public class UpgradeManager : MonoBehaviour
 {
     public int maxHealthUpgradeAmount = 10;
-    private int maxHealthUpgrades = 0;
+    public int maxHealthUpgrades  = 0;
 
     public int maxClipSizeUpgradeAmount = 2;
-    private int clipSizeUpgrades = 0;
+    public int clipSizeUpgrades  = 0;
 
     public int maxAmmoUpgradeAmount = 50;
-    private int maxAmmoUpgrades = 0;
+    public int maxAmmoUpgrades = 0;
 
     public float reloadSpeedUpgradeAmount = .8f; 
-    private int reloadSpeedUpgrades = 0 ;
+    public int reloadSpeedUpgrades = 0;
 
     public float playerMoveSpeedUpgradeAmount = 1f;
-    private int playerMoveSpeedUpgrades = 0;
+    public int playerMoveSpeedUpgrades = 0;
+
+    public static UpgradeManager Instance { get; private set; }
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(Instance);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
     void UpgradeMaxHealth()
     {
         maxHealthUpgrades++;
@@ -43,7 +56,7 @@ public class UpgradeManager : MonoBehaviour
         playerMoveSpeedUpgrades++;
         ApplyUpgrades();
     }
-    void ApplyUpgrades()
+    public void ApplyUpgrades()
     {
         if(GameManager.Instance.currentPlayer != null)
         {

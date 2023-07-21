@@ -20199,8 +20199,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d35aaee782126b44b92b55ff442a9f1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 500
-  startingMaxHealth: 500
+  startingHealth: 250
+  startingMaxHealth: 250
   startingInvulnerableState: 0
   startingInvulnerabilityTimeAfterHit: 0
   attackStartRange: 3
@@ -20209,7 +20209,7 @@ MonoBehaviour:
   - {fileID: 1759076943}
   - {fileID: 1235637108}
   - {fileID: 1947397780}
-  attackDamage: 40
+  attackDamage: 20
   isAgroOnPlayer: 0
 --- !u!195 &773818633
 NavMeshAgent:
@@ -23520,7 +23520,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh25666
+  m_Name: pb_Mesh25674
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -26689,6 +26689,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91c91a805d060bb418b133a0f61d9ece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialMaxHealthUpgrades: 0
+  initialClipSizeUpgrades: 0
+  initialMaxAmmoUpgrades: 0
+  initialReloadSpeedUpgrades: 0
+  initialPlayerMoveSpeedUpgrades: 0
+  initialPlayerWeaponInventory:
+  - {fileID: 3941378665869771657, guid: 71ebf3f6c9d3e114494460962d0f05f5, type: 3}
 --- !u!4 &996610106
 Transform:
   m_ObjectHideFlags: 0
@@ -58267,7 +58274,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2852822625190360188, guid: 288ccc3362046a846b9d3ec8676d41f5, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 288ccc3362046a846b9d3ec8676d41f5, type: 3}

@@ -31,7 +31,10 @@ public class InteractionHandler : MonoBehaviour
         {
             foreach(GameObject obj in interactableObjectsInRange)
             {
-                obj.GetComponentInParent<IInteractable>().Interact();
+                if(obj != null)
+                {
+                    obj.GetComponentInParent<IInteractable>().Interact();
+                }
             }
         }
     }
