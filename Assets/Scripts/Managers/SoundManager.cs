@@ -31,11 +31,11 @@ public class SoundManager : MonoBehaviour
         {
             if (sound.Value.isMusic)
             {
-                 sound.Key.GetComponent<AudioSource>().volume = Remap(sound.Value.volume, 0f, 1f, 0f, musicVolume);
+                 sound.Key.GetComponent<AudioSource>().volume = sound.Value.volume.Remap( 0f, 1f, 0f, musicVolume);
             }
             else
             {
-                sound.Key.GetComponent<AudioSource>().volume = Remap(sound.Value.volume, 0f, 1f, 0f, soundVolume);
+                sound.Key.GetComponent<AudioSource>().volume = sound.Value.volume.Remap( 0f, 1f, 0f, soundVolume);
             }
         }
         
@@ -60,7 +60,7 @@ public class SoundManager : MonoBehaviour
                 AudioSource source = newSoundGO.AddComponent<AudioSource>();
                 newSoundGO.AddComponent<SoundUpdater>();
                 playingSounds.Add(newSoundGO, soundToPlay);
-                source.volume = soundToPlay.isMusic ? Remap(soundToPlay.volume, 0f, 1f, 0f, musicVolume) : Remap(soundToPlay.volume, 0f, 1f, 0f, soundVolume);
+                source.volume = soundToPlay.isMusic ? soundToPlay.volume.Remap(0f, 1f, 0f, musicVolume) : soundToPlay.volume.Remap(0f, 1f, 0f, soundVolume);
                 source.pitch = soundToPlay.pitch;
                 source.loop = loop;
                 source.clip = soundToPlay.sound;
@@ -104,7 +104,7 @@ public class SoundManager : MonoBehaviour
                 newSoundGO.AddComponent<SoundUpdater>();
                 newSoundGO.GetComponent<SoundUpdater>().objectForSound =  obj;
                 playingSounds.Add(newSoundGO, soundToPlay);
-                source.volume = soundToPlay.isMusic ? Remap(soundToPlay.volume, 0f, 1f, 0f, musicVolume) : Remap(soundToPlay.volume, 0f, 1f, 0f, soundVolume);
+                source.volume = soundToPlay.isMusic ? soundToPlay.volume.Remap( 0f, 1f, 0f, musicVolume) : soundToPlay.volume.Remap(0f, 1f, 0f, soundVolume);
                 source.pitch = soundToPlay.pitch;
                 source.loop = loop;
                 source.clip = soundToPlay.sound;
@@ -127,8 +127,5 @@ public class SoundManager : MonoBehaviour
             return null;
         }
     }
-    public float Remap(float value, float from1, float to1, float from2, float to2)
-    {
-        return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
-    }
+
 }

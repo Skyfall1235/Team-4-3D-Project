@@ -83,7 +83,10 @@ public class TransitionDataHandler : MonoBehaviour
         {
             foreach (GameObject go in playerWeaponInventory)
             {
-                Instantiate(go, GameManager.Instance.currentPlayer.GetComponentInChildren<WeaponManager>().transform.TransformPoint(go.GetComponentInChildren<Weapon>().hipFireWeaponPosition), GameManager.Instance.currentPlayer.GetComponentInChildren<WeaponManager>().transform.rotation * go.transform.rotation,  GameManager.Instance.currentPlayer.GetComponentInChildren<WeaponManager>().transform);
+                if(go != null)
+                {
+                    Instantiate(go, GameManager.Instance.currentPlayer.GetComponentInChildren<WeaponManager>().transform.TransformPoint(go.GetComponentInChildren<Weapon>().hipFireWeaponPosition), GameManager.Instance.currentPlayer.GetComponentInChildren<WeaponManager>().transform.rotation * go.transform.rotation, GameManager.Instance.currentPlayer.GetComponentInChildren<WeaponManager>().transform);
+                }
             }
             GameManager.Instance.currentPlayer.GetComponentInChildren<WeaponManager>().UpdateWeaponInventory();
         }
