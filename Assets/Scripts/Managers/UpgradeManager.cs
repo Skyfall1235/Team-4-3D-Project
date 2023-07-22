@@ -19,6 +19,8 @@ public class UpgradeManager : MonoBehaviour
     public float playerMoveSpeedUpgradeAmount = 1f;
     public int playerMoveSpeedUpgrades = 0;
 
+    public int upgradePoints = 0;
+
     public static UpgradeManager Instance { get; private set; }
     private void Awake()
     {
@@ -33,28 +35,48 @@ public class UpgradeManager : MonoBehaviour
     }
     void UpgradeMaxHealth()
     {
-        maxHealthUpgrades++;
-        ApplyUpgrades();
+        if(upgradePoints > 0)
+        {
+            maxHealthUpgrades++;
+            ApplyUpgrades();
+            upgradePoints--;
+        }
     }
     void UpgradeClipSize()
     {
-        clipSizeUpgrades++;
-        ApplyUpgrades();
+        if(upgradePoints > 0) 
+        {
+            clipSizeUpgrades++;
+            ApplyUpgrades();
+            upgradePoints--;
+        }
     }
     void UpgradeMaxAmmo()
     {
-        maxAmmoUpgrades++;
-        ApplyUpgrades();
+        if(upgradePoints > 0)
+        {
+            maxAmmoUpgrades++;
+            ApplyUpgrades();
+            upgradePoints--;
+        }
     }
     void UpgradeReloadSpeed()
     {
-        reloadSpeedUpgrades++;
-        ApplyUpgrades();
+        if(upgradePoints > 0)
+        {
+            reloadSpeedUpgrades++;
+            ApplyUpgrades();
+            upgradePoints--;
+        }
     }
     void UpgradePlayerMoveSpeed()
     {
-        playerMoveSpeedUpgrades++;
-        ApplyUpgrades();
+        if(upgradePoints > 0)
+        {
+            playerMoveSpeedUpgrades++;
+            ApplyUpgrades();
+            upgradePoints--;
+        }
     }
     public void ApplyUpgrades()
     {

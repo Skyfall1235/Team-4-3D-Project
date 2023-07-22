@@ -10,7 +10,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] float respawnTime = 2f;
     [SerializeField] Vector3 spawnLocation;
     [SerializeField] Vector3 spawnRotation;
-
+    [SerializeField] int enemiesBeforeUpgradePoint;
+    public int enemiesKilledAfterLastUpgradePoint = 0;
     public bool isPaused
     {
         get => Time.timeScale <= 0;
@@ -27,6 +28,11 @@ public class GameManager : MonoBehaviour
         if(Input.GetKeyUp(KeyCode.Escape))
         {
             isPaused = !isPaused;
+        }
+        if(enemiesKilledAfterLastUpgradePoint >= enemiesBeforeUpgradePoint && UpgradeManager.Instance != null)
+        {
+            UpgradeManager.Instance.upgradePoints++;
+            enemiesKilledAfterLastUpgradePoint = 0;
         }
     }
     private void Start()
