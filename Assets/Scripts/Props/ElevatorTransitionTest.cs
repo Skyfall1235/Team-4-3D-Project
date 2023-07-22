@@ -10,5 +10,9 @@ public class ElevatorTransitionTest : MonoBehaviour
         {
             FindAnyObjectByType<SceneTransitionAnimationHandler>().StartTransition("LevelTwo scene");
         }
+        if(TransitionDataHandler.Instance != null)
+        {
+            TransitionDataHandler.Instance.UpdateData();
+        }
     }
 }

@@ -72,7 +72,7 @@ public class WeaponManager : MonoBehaviour
                 scrollAxisInUse = false;
             }
         }
-        if (desiredWeaponIndex != weaponInventory.IndexOf(currentWeapon) && !currentWeapon.isReloading && desiredWeaponIndex < weaponInventory.Count && desiredWeaponIndex >= 0)
+        if (desiredWeaponIndex != weaponInventory.IndexOf(currentWeapon) && weaponInventory.ElementAtOrDefault(desiredWeaponIndex) != null && !currentWeapon.isReloading && desiredWeaponIndex < weaponInventory.Count && desiredWeaponIndex >= 0)
         {
             currentWeapon.gameObject.SetActive(false);
             currentWeapon.gameObject.transform.localPosition = currentWeapon.hipFireWeaponPosition;
