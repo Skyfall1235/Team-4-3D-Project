@@ -5,7 +5,7 @@ using UnityEngine;
 public class SwitchableLight : MonoBehaviour, ISwitchable
 {
     Light[] lightsToSwitch;
-    void Start()
+    void Awake()
     {
         if(GetComponentsInChildren<Light>() != null)
         {

@@ -6,7 +6,7 @@ using UnityEngine;
 public class Switch : MonoBehaviour, IInteractable, IResetable
 {
     [SerializeField] List<GameObject> objectsToSwitch;
-    [SerializeField] bool defaultSwitchState;
+    [SerializeField] bool defaultSwitchState = false;
     bool isOn;
     bool canInteract = true;
     Animator animator;

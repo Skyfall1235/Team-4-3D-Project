@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.023692664, g: 0.031568523, b: 0.054326903, a: 1}
+  m_IndirectSpecularColor: {r: 0.023692664, g: 0.03156958, b: 0.054326903, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -23301,6 +23301,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectsToSwitch:
   - {fileID: 480697189}
+  - {fileID: 245551648}
+  - {fileID: 256039462}
+  - {fileID: 1266163416}
+  - {fileID: 1843314207}
+  - {fileID: 1001429217}
+  - {fileID: 1273314941}
+  - {fileID: 324242674}
+  - {fileID: 168232364}
+  - {fileID: 925406318}
+  - {fileID: 533603112}
+  - {fileID: 547761677}
+  - {fileID: 1022423667}
+  - {fileID: 889635416}
+  - {fileID: 259160238}
+  - {fileID: 988268534}
+  - {fileID: 1183508791}
+  - {fileID: 319859088}
+  - {fileID: 1572353695}
+  - {fileID: 2132125527}
+  - {fileID: 1762031454}
+  - {fileID: 2099404965}
+  - {fileID: 529894326}
+  - {fileID: 2037442002}
+  - {fileID: 300637975}
+  - {fileID: 2122314165}
+  - {fileID: 89223717}
+  - {fileID: 1852869158}
+  - {fileID: 2008264797}
+  - {fileID: 2008879871}
+  - {fileID: 1551218130}
+  - {fileID: 1179921725}
+  - {fileID: 809163340}
+  - {fileID: 274971742}
+  - {fileID: 36694773}
+  - {fileID: 1385468304}
+  - {fileID: 751932694}
+  - {fileID: 518981937}
   defaultSwitchState: 0
 --- !u!95 &461208301
 Animator:

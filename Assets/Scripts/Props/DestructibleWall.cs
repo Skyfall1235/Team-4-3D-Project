@@ -5,11 +5,13 @@ using UnityEngine;
 public class DestructibleWall : MonoBehaviour, IDamagable, IResetable
 {
     Dictionary<GameObject, Vector3> partStartPositions = new Dictionary<GameObject, Vector3>();
+    Dictionary<GameObject, Vector3> partStartRotations = new Dictionary<GameObject, Vector3>();
     public void Start()
     {
         foreach(Transform child in transform)
         {
             partStartPositions.Add(child.gameObject, child.transform.position);
+            partStartRotations.Add(child.gameObject, child.transform.rotation.eulerAngles);
         }
     }
 
@@ -32,6 +34,10 @@ public class DestructibleWall : MonoBehaviour, IDamagable, IResetable
             {
                 keyValuePair.Key.GetComponent<Rigidbody>().isKinematic = true;
             }
+        }
+        foreach (KeyValuePair<GameObject, Vector3> keyValuePair in partStartRotations)
+        {
+            keyValuePair.Key.transform.rotation = Quaternion.Euler(keyValuePair.Value);
         }
     }
 }
