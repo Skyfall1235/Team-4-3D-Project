@@ -25,6 +25,8 @@ public class HUDManager : MonoBehaviour
     CanvasGroup PauseMenuCanvasGroup;
     [SerializeField]
     CanvasGroup controllerCanvasGroup;
+    [SerializeField]
+    CanvasGroup UpgradePanelCanvasGroup;
 
     void Awake()
     {
@@ -40,6 +42,7 @@ public class HUDManager : MonoBehaviour
 
         PauseMenuCanvasGroup.alpha = 0.0f;
         controllerCanvasGroup.alpha = 0.0f;
+        UpgradePanelCanvasGroup.alpha = 0.0f;
     }
 
     public void ResumeButtonPressed()
@@ -53,6 +56,7 @@ public class HUDManager : MonoBehaviour
             Debug.Log("test");
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
+            
         }
        
     }
@@ -70,6 +74,20 @@ public class HUDManager : MonoBehaviour
     {
         controllerCanvasGroup.alpha = 0;
         Debug.Log("button pressed");
+    }
+
+    public void UpgradePanelCanvasGroupPressEscape() 
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.isPaused = false;
+            UpgradePanelCanvasGroup.alpha = 0.0f;
+            Debug.Log("test");
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+
+        }
+        //UpgradePanelCanvasGroup.blocksRaycasts = false;
     }
 
     public void MainMenuB()
@@ -100,6 +118,23 @@ public class HUDManager : MonoBehaviour
             GameManager.Instance.isPaused = true;
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
+            //blocking raycast
+            UpgradePanelCanvasGroup.blocksRaycasts = false;
+            PauseMenuCanvasGroup.blocksRaycasts = true;
+
+        }
+
+        if (Input.GetKeyUp(KeyCode.Tab) && GameManager.Instance != null)
+        {
+            UpgradePanelCanvasGroup.alpha = 1.0f;
+            GameManager.Instance.isPaused = true;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            //blocking raycast
+            UpgradePanelCanvasGroup.blocksRaycasts = true;
+            PauseMenuCanvasGroup.blocksRaycasts = false;
+
+
 
         }
 
