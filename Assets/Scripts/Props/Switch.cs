@@ -2,24 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class Switch : MonoBehaviour, IInteractable, IResetable
 {
     [SerializeField] List<GameObject> objectsToSwitch;
     [SerializeField] bool defaultSwitchState;
     bool isOn;
+    bool canInteract = true;
+    Animator animator;
     public void Start()
     {
+        if(GetComponent<Animator>() != null)
+        {
+            animator = GetComponent<Animator>();
+        }
         isOn = defaultSwitchState;
         UpdateSwitchableState();
     }
     public void Interact()
     {
-        isOn = !isOn;
-        if ( SoundManager.Instance != null)
+        if(canInteract) 
         {
-            SoundManager.Instance.PlaySoundOnObject(gameObject, "Switchnoise", false);
+            isOn = !isOn;
+            if (animator != null)
+            {
+                animator.SetBool("SwitchState", isOn);
+            }
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlaySoundOnObject(gameObject, "Switchnoise", false);
+            }
+            UpdateSwitchableState();
+            canInteract= false;
         }
-        UpdateSwitchableState();
     }
     public void ResetObject()
     {
@@ -49,5 +64,10 @@ public class Switch : MonoBehaviour, IInteractable, IResetable
                 }
             }
         }
+    }
+
+    void EnableInteraction()
+    {
+        canInteract = true;
     }
 }
