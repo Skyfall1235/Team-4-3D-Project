@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 
 public class HUDManager : MonoBehaviour
 {
@@ -20,6 +21,10 @@ public class HUDManager : MonoBehaviour
     public CanvasGroup HUDGuidanceText;
     [SerializeField]
     public TMP_Text GuidanceText;
+    [SerializeField]
+    CanvasGroup PauseMenuCanvasGroup;
+    [SerializeField]
+    CanvasGroup controllerCanvasGroup;
 
     void Awake()
     {
@@ -32,6 +37,46 @@ public class HUDManager : MonoBehaviour
             //If we are the Instance, Try to get a valid reference to the current player
             Instance = this;
         }
+
+        PauseMenuCanvasGroup.alpha = 0.0f;
+        controllerCanvasGroup.alpha = 0.0f;
+    }
+
+    public void ResumeButtonPressed()
+    {
+
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.isPaused = false;
+            PauseMenuCanvasGroup.alpha = 0.0f;
+            Debug.Log("test");
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+       
+    }
+
+    public void ControllerButtonPress()
+    {
+        controllerCanvasGroup.alpha = 1.0f;
+        Debug.Log("button pressed");
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
+    }
+
+    public void ControllerButtonPressEscape()
+    {
+        controllerCanvasGroup.alpha = 0;
+        Debug.Log("button pressed");
+    }
+
+    public void MainMenuB()
+    {
+        //FindAnyObjectByType<SceneTransitionAnimationHandler>().StartTransition("Main Menu scene");
+        SceneManager.LoadScene("Main Menu scene");
+
     }
 
 
@@ -49,5 +94,14 @@ public class HUDManager : MonoBehaviour
             PlayerReserveAmmo.text = GameManager.Instance.currentPlayer.GetComponentInChildren<WeaponManager>().currentWeapon.currentAmmo.ToString();
             PlayerAmmoInClipAndClipSize.text = GameManager.Instance.currentPlayer.GetComponentInChildren<WeaponManager>().currentWeapon.currentClip.ToString() + " / " + GameManager.Instance.currentPlayer.GetComponentInChildren<WeaponManager>().currentWeapon.currentClipSize.ToString();
         }
+        if (Input.GetKeyUp(KeyCode.Escape) && GameManager.Instance != null)
+        {
+            PauseMenuCanvasGroup.alpha = 1.0f;
+            GameManager.Instance.isPaused = true;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+
+        }
+
     }
 }

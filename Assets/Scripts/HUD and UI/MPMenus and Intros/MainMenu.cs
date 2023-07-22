@@ -103,7 +103,8 @@ public class MainMenu : MonoBehaviour
 
     public void PlayGameB()
     {
-        SceneManager.LoadScene("Test Scene");
+        //SceneManager.LoadScene("Level One scene");
+        FindAnyObjectByType<SceneTransitionAnimationHandler>().StartTransition("Level One scene");
 
     }
     public void MainMenuB()
