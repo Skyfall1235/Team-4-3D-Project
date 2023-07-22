@@ -16,7 +16,7 @@ public class TransitionDataHandler : MonoBehaviour
     int playerMoveSpeedUpgrades;
     [SerializeField] int initialPlayerMoveSpeedUpgrades = 0;
 
-    List<GameObject> playerWeaponInventory;
+    List<GameObject> playerWeaponInventory = new List<GameObject>();
     [SerializeField]List<GameObject> initialPlayerWeaponInventory;
 
     public static TransitionDataHandler Instance;
@@ -30,22 +30,18 @@ public class TransitionDataHandler : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            maxAmmoUpgrades = initialMaxAmmoUpgrades;
+            maxHealthUpgrades= initialMaxHealthUpgrades;
+            reloadSpeedUpgrades = initialReloadSpeedUpgrades;
+            playerMoveSpeedUpgrades= initialPlayerMoveSpeedUpgrades;
+            clipSizeUpgrades= initialClipSizeUpgrades;
+            playerWeaponInventory = new List<GameObject>(initialPlayerWeaponInventory);
+            LoadStoredData();
         }
     }
     private void Start()
     {
    
-    }
-    void OnEnable()
-    {
-        //Tell our function to start listening for a scene change as soon as this script is enabled.
-        SceneManager.sceneLoaded += OnSceneChanged;
-    }
-
-    void OnDisable()
-    {
-        //Tell our function to stop listening for a scene change as soon as this script is disabled. Remember to always have an unsubscription for every delegate you subscribe to!
-        SceneManager.sceneLoaded -= OnSceneChanged;
     }
     public void UpdateData()
     {
@@ -89,24 +85,6 @@ public class TransitionDataHandler : MonoBehaviour
                 }
             }
             GameManager.Instance.currentPlayer.GetComponentInChildren<WeaponManager>().UpdateWeaponInventory();
-        }
-    }
-
-    void OnSceneChanged(Scene scene, LoadSceneMode mode)
-    {
-        if(scene.name == "Level One scene")
-        {
-            maxHealthUpgrades = initialMaxHealthUpgrades;
-            clipSizeUpgrades= initialClipSizeUpgrades;
-            maxAmmoUpgrades= initialMaxAmmoUpgrades;
-            reloadSpeedUpgrades= initialReloadSpeedUpgrades;
-            playerMoveSpeedUpgrades= initialPlayerMoveSpeedUpgrades;
-            playerWeaponInventory = new List<GameObject>(initialPlayerWeaponInventory);
-            LoadStoredData();
-        }
-        else
-        {
-            LoadStoredData();
         }
     }
 }

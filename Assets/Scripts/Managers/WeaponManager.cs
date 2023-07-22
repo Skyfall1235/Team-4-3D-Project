@@ -14,6 +14,13 @@ public class WeaponManager : MonoBehaviour
     {
         UpdateWeaponInventory();
     }
+    private void Start()
+    {
+        if (TransitionDataHandler.Instance != null)
+        {
+            TransitionDataHandler.Instance.LoadStoredData();
+        }
+    }
 
     // Update is called once per frame
     void Update()
