@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Both Green
+  m_Name: DoorWay Both Red
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -27,7 +27,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 5f9ecb6dbe724bc478e99dcd6f034af8, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1515ef8334915db4192caf14ba5a1415, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -43,15 +43,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
-        m_Texture: {fileID: 2800000, guid: b028f86d8958654438a200dd90499c9b, type: 3}
+        m_Texture: {fileID: 2800000, guid: 8dfe6180772fb054ab1b33b3f3ee45a2, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: ceb572e013c99b24bb8e9391ccff6018, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1f1e30ff555d6d94ca00feb22a5dab47, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 2800000, guid: 6c2292b04ad449e42b679c87974366ea, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3ef52e08b34d2a5478b0fd0b853db570, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
